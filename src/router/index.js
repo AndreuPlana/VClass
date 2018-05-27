@@ -7,6 +7,7 @@ import NewEmployee from '@/components/NewEmployee';
 import EditEmployee from '@/components/EditEmployee';
 import Login from '@/components/Login';
 import reset from '@/components/reset';
+import newpost from '@/components/newpost'
 import Register from '@/components/Register';
 import firebase from 'firebase';
 
@@ -18,6 +19,14 @@ let router = new Router({
       path: '/',
       name: 'dashboard',
       component: dashboard,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/newpost',
+      name: 'Nou Post',
+      component: newpost,
       meta: {
         requiresAuth: true
       }

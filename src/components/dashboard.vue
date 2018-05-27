@@ -43,6 +43,7 @@ export default {
                 //console.log(data)
             })
         }) 
+
         db.collection('posts').get().then(querySnapshot=>{
             querySnapshot.forEach(doc =>{
                 const pdata = {
@@ -50,11 +51,11 @@ export default {
                     'titol' : doc.data().titol,
                     'content' : doc.data().contingut,
                     'tags' : doc.data().tags,
-                    'comments' : doc.data().comentaris
+                    'comments' : doc.data().commentaris
 
                 }
                 this.posts.push(pdata)
-                console.log(pdata)
+                console.log(pdata);
             })
         })
     }
