@@ -9,12 +9,16 @@
         <li v-for="users in users" v-bind:key="users.id" class="collection-item">
             {{users.id}} {{users.user}}
         </li>
+
+        <li class="collection-header">
+            <h4>Posts</h4>
+        </li>
+        <li v-for="posts in posts" v-bind:key="posts.id" class="collection-item">
+            <h5>{{posts.titol}}</h5><br> <p> {{posts.content}}</p><br> {{posts.tags}}
+            <br> {{posts.comments}}
+        </li>
     </ul>
 
-    <router-link to="/new" class="btn-floating btn-large red">
-    <i class="fa ca-plus"></i>
-
-    </router-link>
 </div>
 </template>
 
@@ -24,7 +28,8 @@ export default {
     name:'dashboard',
     data(){
         return{
-            users:[]
+            users:[],
+            posts:[]
         }
     }
     ,created(){
@@ -35,9 +40,23 @@ export default {
                     'user':doc.data().usuari
                 }
                 this.users.push(data)
-                console.log(data)
+                //console.log(data)
             })
         }) 
+        db.collection('posts').get().then(querySnapshot=>{
+            querySnapshot.forEach(doc =>{
+                const pdata = {
+                    'link' : '/post/'+doc.id,
+                    'titol' : doc.data().titol,
+                    'content' : doc.data().contingut,
+                    'tags' : doc.data().tags,
+                    'comments' : doc.data().comentaris
+
+                }
+                this.posts.push(pdata)
+                console.log(pdata)
+            })
+        })
     }
 }
 </script>

@@ -6,17 +6,17 @@
       <a class="brand-logo" href="#"><span class="text-danger">VClass</span></a>
       <div>
         <ul class="right hide-on-small-and-down">
-          <li>
-            <a href="#" routerLink="/user">User</a>
+          <li v-if="isLoggedIn">
+            <router-link to="/dashboard">DashBoard</router-link>
+          </li>
+          <li v-if="!isLoggedIn">
+            <router-link to="/login">Login</router-link>
           </li>
           <li>
-            <a href="#" routerLink="/login">Login</a>
+            <router-link to="/register">Registrar</router-link>
           </li>
-          <li>
-            <a href="#" routerLink="/register">Registre</a>
-          </li>
-          <li>
-            <a href="#">Logout</a>
+          <li v-if="!isLoggedIn">
+            <button v-on:click="logout">Logout</button>
           </li>
         </ul>
       </div>
@@ -25,3 +25,30 @@
 </div>
     </div>
 </template>
+
+
+<script>
+import firebase from 'firebase';
+export default {
+  name : 'navbar',
+  data(){
+    return {
+      isLoggedIn:false,
+      currentUser:false
+    }
+  },
+  created(){
+    if(firebase.auth().currentUser){
+      this.isLoggedIn = true;
+      this.currentUser = firebase.auth().currentUser.email;
+    }
+  },
+  methods:{
+    logout: function(){
+      firebase.auth().signOut().then(() =>{
+        this.$router.push('/login')
+      });
+    }
+  }
+}
+</script>

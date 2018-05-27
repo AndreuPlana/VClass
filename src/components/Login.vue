@@ -5,14 +5,14 @@
         <div class="card">
             <div class="card-body center pd-custom-lr">
                 <h1>LOGIN</h1>
-                <form>
+                <form v-on:submit="login">
                     <div class="input-field">
                         <label for="email">Email</label>
-                        <input type="email" name="email" id="email" class="form-control">
+                        <input type="email" name="email" id="email" v-model="email" class="form-control">
                     </div>
                     <div class="input-field">
                         <label for="password">Password</label>
-                        <input type="password" name="password" id="password" class="form-control">
+                        <input type="password" name="password" id="password" v-model="password" class="form-control">
                     </div>
                     <input type="submit" value="ENVIAR" class="btn btn-custom">
                 </form>
@@ -25,7 +25,8 @@
         <div class="card">
             <div class="card-body center pd-custom-bt">
                 <button class="btn red btn-custom2"><i class="fab fa-google-plus-g"></i> Google</button>
-                <button class="btn btn-custom2"><i class="fa fa-sync-alt"></i> Reiniciar Contrassenya</button>
+                <router-link to="/reset">
+                <button class="btn btn-custom2"><i class="fa fa-sync-alt"></i> Reiniciar Contrassenya</button></router-link>
             </div>
         </div>
     </div>
@@ -33,14 +34,64 @@
 </div>
 
 </template>
+<style>
+.btn-facebook, .btn-google, .btn-twitter{
+    width: 32%;
+}
+
+.btn-google{
+    background: #dd4b39;
+    color: white;
+}
+
+.pd-custom-lr {
+    padding-left: 50px !important;
+    padding-right: 50px !important;
+}
+
+.pd-custom-bt {
+    padding-bottom: 25px !important;
+    padding-top: 25px !important;
+}
+
+.btn-custom {
+    width: 45%;
+    margin-bottom: 25px;
+    margin-top: 10px;
+}
+
+.red:hover {
+    background: #ff3628 !important;
+}
+
+.btn-custom2 {
+    width: 40%;
+    margin-right: 20px;
+}
+</style>
 
 <script>
+import firebase from 'firebase';
 export default {
     name:'Login',
     data(){
         return{
-
+            email : '',
+            password : ''
         }
+    },
+    methods:{
+         login : function(e){
+             firebase.auth().signInWithEmailAndPassword(this.email,this.password)
+             .then(user=>{
+                  alert('Logged In');
+                  this.$router.push('/')
+             },
+             error=>{
+                 alert(error.message);
+             })
+        e.preventDefault();
+         }
     }
 }
 </script>
