@@ -85,6 +85,7 @@ export default {
              .then(user=>{
                   alert('Logged In');
                   this.$router.push('/')
+                  window.location.reload();
              },
              error=>{
                  alert(error.message);

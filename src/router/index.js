@@ -4,11 +4,12 @@ import dashboard from '@/components/dashboard';
 import terms from '@/components/terms';
 import ViewEmployee from '@/components/ViewEmployee';
 import NewEmployee from '@/components/NewEmployee';
-import EditEmployee from '@/components/EditEmployee';
+import Post from '@/components/Post';
 import Login from '@/components/Login';
 import reset from '@/components/reset';
 import newpost from '@/components/newpost'
 import Register from '@/components/Register';
+import errorpage from '@/components/errorpage'
 import firebase from 'firebase';
 
 Vue.use(Router);
@@ -73,12 +74,18 @@ let router = new Router({
       }
     },
     {
-      path: '/edit/:employee_id',
-      name: 'edit-employee',
-      component: EditEmployee,
-      meta: {
-        requiresAuth: true
-      }
+      path: '/post/:postid',
+      name: 'Post',
+      component: Post
+    },
+    {
+      path: '/error',
+      name: 'ErrorPage',
+      component: errorpage
+    },
+    {
+      path: '*',
+      redirect : '/error'
     },
     {
       path: '/:employee_id',

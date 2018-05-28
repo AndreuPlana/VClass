@@ -70,7 +70,12 @@ export default {
                  tags : this.tags,
                  usuari : firebase.auth().currentUser.uid,
                  arxiu : this.downloadURL,
-                 time : firebase.firestore.FieldValue.serverTimestamp()
+                 time : firebase.firestore.FieldValue.serverTimestamp(),
+                 id :''
+             })
+             db.collection('posts').set( doc=>{
+                 alert(doc.id)
+                 id: doc.id;
              })
              alert("Post Created");
 
