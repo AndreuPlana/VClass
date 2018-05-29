@@ -1,16 +1,19 @@
 <template>
-<div id="editemployee">
-    <h3>editemployee</h3>
+<div class="errorpage">
+    <h1>ErrorPage</h1>
 </div>
 </template>
+<style>
 
+</style>
 <script>
 export default {
-    name:'editemployee',
+    name:'ErrorPage',
     data(){
         return{
-
+            
         }
     }
 }
 </script>
+

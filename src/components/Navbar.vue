@@ -7,17 +7,21 @@
       <div>
         <ul class="right hide-on-small-and-down">
           <li v-if="isLoggedIn">
-            <router-link to="/dashboard">DashBoard</router-link>
+            <router-link to="/">DashBoard</router-link>
           </li>
           <li v-if="!isLoggedIn">
             <router-link to="/login">Login</router-link>
           </li>
-          <li>
+          <li v-if="!isLoggedIn">
             <router-link to="/register">Registrar</router-link>
           </li>
-          <li v-if="!isLoggedIn">
+          <li v-if="isLoggedIn">
+            <router-link to="/newpost">New Post</router-link>
+          </li>
+          <li v-if="isLoggedIn">
             <button v-on:click="logout">Logout</button>
           </li>
+          
         </ul>
       </div>
     </div>
@@ -46,7 +50,8 @@ export default {
   methods:{
     logout: function(){
       firebase.auth().signOut().then(() =>{
-        this.$router.push('/login')
+        this.$router.push('/login');
+        window.location.reload();
       });
     }
   }

@@ -4,18 +4,11 @@
     <p>First Page</p>
     <ul class="colletction with-header">
         <li class="collection-header">
-            <h4>Users</h4>
-        </li>
-        <li v-for="users in users" v-bind:key="users.id" class="collection-item">
-            {{users.id}} {{users.user}}
-        </li>
-
-        <li class="collection-header">
-            <h4>Posts</h4>
+            <h4>PostsList</h4>
         </li>
         <li v-for="posts in posts" v-bind:key="posts.id" class="collection-item">
-            <h5>{{posts.titol}}</h5><br> <p> {{posts.content}}</p><br> {{posts.tags}}
-            <br> {{posts.comments}}
+            <router-link :to="`/post/${posts.link}`">{{posts.titol}}</router-link>
+             <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}"><i class="fa fa-eye"></i></router-link>
         </li>
     </ul>
 
@@ -47,7 +40,7 @@ export default {
         db.collection('posts').get().then(querySnapshot=>{
             querySnapshot.forEach(doc =>{
                 const pdata = {
-                    'link' : '/post/'+doc.id,
+                    'link' : doc.id,
                     'titol' : doc.data().titol,
                     'content' : doc.data().contingut,
                     'tags' : doc.data().tags,
