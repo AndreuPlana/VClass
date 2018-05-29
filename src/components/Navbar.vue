@@ -3,7 +3,7 @@
     <div class="navbar-fixed">
       <nav class="navbar-wrapper custom-color">
         <div class="container">
-          <a class="brand-logo" href="#"><span class="text-danger">VClass</span></a>
+          <a class="logo" href="#"><span class="text-danger">VClass</span></a>
           <div>
             <ul class="right hide-on-small-and-down">
               <li v-if="isLoggedIn">
@@ -59,3 +59,16 @@
         }
     }
 </script>
+
+<style>
+  .logo{
+    position: absolute;
+    color: #fff;
+    display: inline-block;
+    font-size: 2.1rem;
+    padding: 0;
+  }
+  .red:hover {
+    background: #c7382d !important;
+  }
+</style>

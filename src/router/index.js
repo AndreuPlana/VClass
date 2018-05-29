@@ -2,11 +2,11 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import dashboard from '@/components/dashboard';
 import terms from '@/components/terms';
-import ViewEmployee from '@/components/ViewEmployee';
 import Post from '@/components/Post';
 import Login from '@/components/Login';
 import reset from '@/components/reset';
 import newpost from '@/components/newpost'
+import categories from '@/components/categories';
 import Register from '@/components/Register';
 import profile from '@/components/profile';
 import errorpage from '@/components/errorpage'
@@ -28,6 +28,14 @@ let router = new Router({
       path: '/newpost',
       name: 'Nou Post',
       component: newpost,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/categories/:categoria',
+      name: 'Categories',
+      component: categories,
       meta: {
         requiresAuth: true
       }
