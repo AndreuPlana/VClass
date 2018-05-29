@@ -43,8 +43,9 @@ export default {
             firebase.auth().sendPasswordResetEmail(this.email).then(function() {
             alert("Email Sent");
             location.href = '/';
+                M.toast({html: 'Correu Enviat', classes: 'rounded green'});
             }).catch(function(error) {
-            alert(error)
+                M.toast({html: 'Correu no Enviat', classes: 'rounded red'});
             })
         }
     }

@@ -29,6 +29,7 @@
 <<<<<<< HEAD
                     <input type="date" name="naixement" id="naixement" v-model="dnaixement" class="datepicker" required>
 =======
+                    <input placeholder="" type="date" name="naixement" id="naixement" v-model="dnaixement" class="form-control" required>
 >>>>>>> 9d8c3e669dbcfa4d73a374b2a2330464c3df5115
                 </div>
                 <div class="input-field">
