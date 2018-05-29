@@ -56,7 +56,7 @@
     margin-top: 10px;
 }
 
-.red:hover {
+.btn-google:hover {
     background: #ff3628 !important;
 }
 
