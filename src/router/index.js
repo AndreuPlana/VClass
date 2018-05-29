@@ -8,6 +8,7 @@ import Login from '@/components/Login';
 import reset from '@/components/reset';
 import newpost from '@/components/newpost'
 import Register from '@/components/Register';
+import profile from '@/components/profile';
 import errorpage from '@/components/errorpage'
 import firebase from 'firebase';
 
@@ -70,6 +71,14 @@ let router = new Router({
       component: Post
     },
     {
+        path: '/profile',
+        name: 'profile',
+        component: profile,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
       path: '/error',
       name: 'ErrorPage',
       component: errorpage
@@ -77,14 +86,6 @@ let router = new Router({
     {
       path: '*',
       redirect : '/error'
-    },
-    {
-      path: '/:employee_id',
-      name: 'view-employee',
-      component: ViewEmployee,
-      meta: {
-        requiresAuth: true
-      }
     }
   ]
 });

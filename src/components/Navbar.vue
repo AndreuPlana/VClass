@@ -16,6 +16,9 @@
                 <router-link to="/register">Registrar</router-link>
               </li>
               <li v-if="isLoggedIn">
+                <router-link to="/profile">Perfil</router-link>
+              </li>
+              <li v-if="isLoggedIn">
                 <router-link to="/newpost">New Post</router-link>
               </li>
               <li v-if="isLoggedIn">
