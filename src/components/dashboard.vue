@@ -1,7 +1,6 @@
 <template>
 <div id="dashboard">
-    <h3>Dashboard</h3>
-    <p>First Page</p>
+    <h3>Main Page</h3>
     <ul class="colletction with-header">
         <li class="collection-header">
             <h4>PostsList</h4>
@@ -11,6 +10,15 @@
              <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}"><i class="fa fa-eye"></i></router-link>
         </li>
     </ul>
+    <ul class="colletction with-header">
+        <li class="collection-header">
+            <h4>categories</h4>
+        </li>
+        <li v-for="categories in categories" v-bind:key="categories.idcat" class="collection-item">
+             <router-link :to="`/categories/${categories.id}`">{{categories.nom}}</router-link>
+        </li>
+    </ul>
+    
 
 </div>
 </template>
@@ -22,7 +30,8 @@ export default {
     data(){
         return{
             users:[],
-            posts:[]
+            posts:[],
+            categories:[]
         }
     }
     ,created(){
@@ -36,7 +45,15 @@ export default {
                 //console.log(data)
             })
         }) 
-
+        db.collection('categories').get().then(querySnapshot=>{
+            querySnapshot.forEach(doc =>{
+                const cdata = {
+                    'id' :doc.id,
+                    'nom':doc.data().nom
+                }
+                this.categories.push(cdata)
+            })
+        })
         db.collection('posts').get().then(querySnapshot=>{
             querySnapshot.forEach(doc =>{
                 const pdata = {

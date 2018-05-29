@@ -11,7 +11,7 @@
                     </div>
                      <div class="input-field">
                         <label for="Contingut">Contingut</label>
-                        <input type="text" name="Contingut" id="Contingut" v-model="contingut" required class="form-control">
+                        <textarea id="textarea1" class="materialize-textarea" v-model="contingut"></textarea>
                     </div>
                     <div class="input-field">
                         <label for="tags">Tags</label>
@@ -20,7 +20,7 @@
                     <div class="file-field input-field">
                     <div class="btn">
                         <span>File</span>
-                        <input type="file" @change="file">
+                        <input type="file">
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text">
@@ -70,16 +70,13 @@ export default {
                  tags : this.tags,
                  usuari : firebase.auth().currentUser.uid,
                  arxiu : this.downloadURL,
-                 time : firebase.firestore.FieldValue.serverTimestamp(),
-                 id :''
+                 time : firebase.firestore.FieldValue.serverTimestamp()
              })
-             db.collection('posts').set( doc=>{
-                 alert(doc.id)
-                 id: doc.id;
-             })
-             alert("Post Created");
-
-         }
+                     
+            M.toast({html: 'Post Creat', classes: 'rounded green'});
+            this.$router.push('/');
+            
+        }
 
     }
     

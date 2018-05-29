@@ -3,7 +3,6 @@ import Router from 'vue-router';
 import dashboard from '@/components/dashboard';
 import terms from '@/components/terms';
 import ViewEmployee from '@/components/ViewEmployee';
-import NewEmployee from '@/components/NewEmployee';
 import Post from '@/components/Post';
 import Login from '@/components/Login';
 import reset from '@/components/reset';
@@ -63,14 +62,6 @@ let router = new Router({
       component: Register,
       meta: {
         requiresGuest: true
-      }
-    },
-    {
-      path: '/new',
-      name: 'new-employee',
-      component: NewEmployee,
-      meta: {
-        requiresAuth: true
       }
     },
     {

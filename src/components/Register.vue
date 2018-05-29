@@ -26,23 +26,23 @@
                 </div>
                 <div class="input-field">
                     <label for="naixement">Data de naixement *</label>
-                    <input type="text" name="naixement" id="naixement" v-model="dnaixement" class="form-control" required>
+                    <input type="date" name="naixement" id="naixement" v-model="dnaixement" class="datepicker" required>
                 </div>
                 <div class="input-field">
                     <label for="pais">Pais</label>
-                    <input type="text" name="pais" id="pais" class="form-control">
+                    <input type="text" name="pais" v-model="pais" id="pais" class="form-control">
                 </div>
                 <div class="input-field">
                     <label for="telefon">Telefon</label>
-                    <input type="number" name="telefon" id="telefon" class="form-control">
+                    <input type="number" name="telefon" v-model="telefon" id="telefon" class="form-control">
                 </div>
                 <div class="input-field">
                     <label for="codiPostal">Codi Postal</label>
-                    <input type="number" name="codiPostal" id="codiPostal" class="form-control">
+                    <input type="number" name="codiPostal" v-model="cpostal" id="codiPostal" class="form-control">
                 </div>
                     <p>
                         <label>
-                            <input id="indeterminate-checkbox" type="checkbox" />
+                            <input id="indeterminate-checkbox" type="checkbox" v-model="conditions" required />
                             <span>Accepto els <router-link to="/terms"><a class="underline" href="/terms">termes i condicions</a></router-link></span>
                         </label>
                     </p>
@@ -60,6 +60,7 @@
 <script>
 
     import firebase from 'firebase';
+    import db from './firebaseInit';
 
 export default {
     name:'Register',
@@ -70,22 +71,45 @@ export default {
             nom : '',
             cognoms : '',
             username : '',
-            dnaixement : ''
+            dnaixement : '',
+            conditions : false,
+            pais :'',
+            telefon : '',
+            cpostal : ''
 
         }
     },
     methods:{
          register : function(e){
+
+             
+
+             if(!this.nom || !this.cognoms || !this.dnaixement || !this.username || !this.conditions){
+                 M.toast({html: 'Falten camps obligatoris', classes: 'rounded red'});
+             }else{
+
+             db.collection('users').add({
+                    username : this.username,
+                    dnaixement : this.dnaixement,
+                    pais : this.pais,
+                    telefon : this.telefon,
+                    cpostal : this.cpostal
+                })
              firebase.auth().createUserWithEmailAndPassword(this.email,this.password)
              .then(user=>{
-                  alert('Account Created for ${{user.email}}');
-                  this.$router.push("/");
+
+                M.toast({html: 'Usuari Registrat!', classes: 'rounded green'});
+                firebase.auth().currentUser.displayName=this.nom;
+                firebase.auth().currentUser.photoURL='http://www.vibro.no/wp-content/uploads/2018/01/default-user-image.png';
+                this.$router.push("/");
+                
              },
              error=>{
                  alert(error.message);
              })
         e.preventDefault();
          }
+         } 
     }
 }
 </script>

@@ -83,32 +83,36 @@ export default {
          login : function(e){
              firebase.auth().signInWithEmailAndPassword(this.email,this.password)
              .then(user=>{
-                  alert('Logged In');
+                  alert('Logejat Correctament!');
                   this.$router.push('/')
                   window.location.reload();
              },
              error=>{
-                 alert(error.message);
+                 alert('Login Incorrecte!');
              })
         e.preventDefault();
          },
          loginGoogle:function(){
-            var provider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup(provider).then(function(result) {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            var token = result.credential.accessToken;
-            // The signed-in user info.
-            var user = result.user;
-            // ...
+                var provider = new firebase.auth.GoogleAuthProvider();
+                firebase.auth().signInWithPopup(provider).then(function(result) {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                var token = result.credential.accessToken;
+                // The signed-in user info.
+                var user = result.user;
+
+                alert('Logejat Correctament!');
+                  this.$router.push('/')
+                  window.location.reload();
+                // ...
             }).catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
-            // ...
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // The email of the user's account used.
+                var email = error.email;
+                // The firebase.auth.AuthCredential type that was used.
+                var credential = error.credential;
+                // ...
             });
 
          }
