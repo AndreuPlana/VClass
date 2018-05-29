@@ -1,10 +1,10 @@
 <template>
     <div>
-    <ul class="colletction with-header">
+    <ul class="collection with-header">
         <li class="collection-header">
             <h4>{{$route.params.categoria}}</h4>
         </li>
-        <li v-for="posts in posts" v-bind:key="posts.id">
+        <li v-for="posts in posts" v-bind:key="posts.id" class="collection-item">
             <router-link :to="`/post/${posts.link}`">{{posts.titol}}</router-link>
 
             <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}">
@@ -12,6 +12,49 @@
                 <i class="fa fa-eye"></i>
             </router-link>
         </li>
+        <div id="preloaderPost" class="center">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+
+                <div class="spinner-layer spinner-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+
+                <div class="spinner-layer spinner-yellow">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+
+                <div class="spinner-layer spinner-green">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+            </div>
+        </div>
     </ul>
     </div>
 </template>
@@ -44,6 +87,8 @@ export default {
                 'comments' : doc.data().commentaris
                 }
                 this.posts.push(pdata);
+                document.getElementById('preloaderPost').style.display = "none";
+                document.getElementById('preloaderComment').style.display = "none";
                 console.log(pdata);
             })
         })
