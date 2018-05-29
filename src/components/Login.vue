@@ -24,7 +24,7 @@
     <div class="col s12">
         <div class="card">
             <div class="card-body center pd-custom-bt">
-                <button class="btn red btn-custom2" v-on:click="loginGoogle"><i class="fab fa-google-plus-g"></i> Google</button>
+                <button class="btn btn-google btn-custom2" v-on:click="loginGoogle"><i class="fab fa-google-plus-g"></i> Google</button>
                 <router-link to="/reset"><button class="btn btn-custom2"><i class="fa fa-sync-alt"></i> Reiniciar Contrassenya</button></router-link>
             </div>
         </div>
@@ -34,9 +34,6 @@
 
 </template>
 <style>
-.btn-facebook, .btn-google, .btn-twitter{
-    width: 32%;
-}
 
 .btn-google{
     background: #dd4b39;

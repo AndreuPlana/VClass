@@ -25,12 +25,8 @@
                     <input type="text" name="usuari" id="usuari" class="form-control" v-model="username" required>
                 </div>
                 <div class="input-field">
-                    <label for="naixement">Data de naixement *</label>
-<<<<<<< HEAD
-                    <input type="date" name="naixement" id="naixement" v-model="dnaixement" class="datepicker" required>
-=======
+                    <label for="naixement">*</label>
                     <input placeholder="" type="date" name="naixement" id="naixement" v-model="dnaixement" class="form-control" required>
->>>>>>> 9d8c3e669dbcfa4d73a374b2a2330464c3df5115
                 </div>
                 <div class="input-field">
                     <label for="pais">Pais</label>
