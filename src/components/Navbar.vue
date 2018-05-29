@@ -19,10 +19,8 @@
             <router-link to="/newpost">New Post</router-link>
           </li>
           <li v-if="isLoggedIn">
-            <a class="waves-effect waves-light btn red" v-on:click="logout"><i class="material_icons exit_to_app left"></i>Logout</a>
-
+            <a class="btn red" v-on:click="logout"><i class="material-icons left">exit_to_app</i>Logout</a>
           </li>
-          
         </ul>
       </div>
     </div>
