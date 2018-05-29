@@ -26,7 +26,7 @@
                 </div>
                 <div class="input-field">
                     <label for="naixement">Data de naixement *</label>
-                    <input type="text" name="naixement" id="naixement" v-model="dnaixement" class="form-control" required>
+                    <input placeholder="" type="date" name="naixement" id="naixement" v-model="dnaixement" class="form-control" required>
                 </div>
                 <div class="input-field">
                     <label for="pais">Pais</label>
