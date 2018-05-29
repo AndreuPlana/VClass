@@ -1,10 +1,10 @@
 <template>
     <div>
-    <ul v-for="posts in posts" v-bind:key="posts.id" class="colletction with-header">
+    <ul class="colletction with-header">
         <li class="collection-header">
-            <h4>{{posts.categoria}}</h4>
+            <h4>{{$route.params.categoria}}</h4>
         </li>
-        <li>
+        <li v-for="posts in posts" v-bind:key="posts.id">
             <router-link :to="`/post/${posts.link}`">{{posts.titol}}</router-link>
 
             <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}">
