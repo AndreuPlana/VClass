@@ -1,13 +1,12 @@
 <template>
     <div id="profile">
-
     </div>
 </template>
 
 <script>
     import db from './firebaseInit';
     export default {
-        name: "profile"
+        name: "profile",
         data(){
             return{
                 users:[],
