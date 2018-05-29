@@ -33,9 +33,9 @@ let router = new Router({
       }
     },
     {
-      path: '/categories',
+      path: '/categories/:categoria',
       name: 'Categories',
-      component: newpost,
+      component: categories,
       meta: {
         requiresAuth: true
       }

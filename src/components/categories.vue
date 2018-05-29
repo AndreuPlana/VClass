@@ -1,5 +1,19 @@
 <template>
-    
+    <div>
+    <ul v-for="posts in posts" v-bind:key="posts.id" class="colletction with-header">
+        <li class="collection-header">
+            <h4>{{posts.categoria}}</h4>
+        </li>
+        <li>
+            <router-link :to="`/post/${posts.link}`">{{posts.titol}}</router-link>
+
+            <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}">
+                <span></span>
+                <i class="fa fa-eye"></i>
+            </router-link>
+        </li>
+    </ul>
+    </div>
 </template>
 <style>
 
@@ -11,7 +25,7 @@ export default {
     name: 'Categories',
     data(){
         return{
-
+            posts:[]
         }
     },
     watch :{
@@ -19,5 +33,27 @@ export default {
             alert(to.params.categoria);
         }
     },
+    created(){
+        db.collection('posts').where('categoria','==',this.$route.params.categoria).get().then(querySnapshot=>{
+            querySnapshot.forEach(doc => {
+                const pdata = {
+                'link' : doc.id,
+                'titol' : doc.data().titol, 
+                'content' : doc.data().contingut,
+                'tags' : doc.data().tags,
+                'comments' : doc.data().commentaris
+                }
+                this.posts.push(pdata);
+                console.log(pdata);
+            })
+        })
+    } 
 }
 </script>
+
+
+// 'link' : doc.id,
+//                     'titol' : doc.data().titol,
+//                     'content' : doc.data().contingut,
+//                     'tags' : doc.data().tags,
+//                     'comments' : doc.data().commentaris
