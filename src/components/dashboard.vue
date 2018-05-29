@@ -1,26 +1,24 @@
 <template>
-<div id="dashboard">
-    <h3>Main Page</h3>
-    <ul class="colletction with-header">
-        <li class="collection-header">
-            <h4>PostsList</h4>
-        </li>
-        <li v-for="posts in posts" v-bind:key="posts.id" class="collection-item">
-            <router-link :to="`/post/${posts.link}`">{{posts.titol}}</router-link>
-             <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}"><i class="fa fa-eye"></i></router-link>
-        </li>
-    </ul>
-    <ul class="colletction with-header">
-        <li class="collection-header">
-            <h4>categories</h4>
-        </li>
-        <li v-for="categories in categories" v-bind:key="categories.idcat" class="collection-item">
-             <router-link :to="`/categories/${categories.id}`">{{categories.nom}}</router-link>
-        </li>
-    </ul>
-    
-
-</div>
+    <div id="dashboard">
+        <h3>Main Page</h3>
+        <ul class="collection with-header">
+            <li class="collection-header">
+                <h4>PostsList</h4>
+            </li>
+            <li v-for="posts in posts" v-bind:key="posts.id" class="collection-item">
+                <router-link :to="`/post/${posts.link}`">{{posts.titol}}</router-link>
+                 <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}"><i class="fa fa-eye"></i></router-link>
+            </li>
+        </ul>
+        <ul class="colletction with-header">
+            <li class="collection-header">
+                <h4>categories</h4>
+            </li>
+            <li v-for="categories in categories" v-bind:key="categories.idcat" class="collection-item">
+                 <router-link :to="`/categories/${categories.id}`">{{categories.nom}}</router-link>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script>
