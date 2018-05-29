@@ -18,25 +18,14 @@
         tags: null
       }
     },
-    watch:{
-        '$route' (to,from){
-            alert(to.params.postid)
+    watch :{
+        '$route'(to,from){
+            alert(to.params.postid);
         }
+    },
+    created(){
+        alert("createdalert"+this.$route.params.postid);
     }
-    ,beforecreate(){
-        // db.collection('posts').get().then(querySnapshot=>{
-        //     querySnapshot.forEach(doc =>{
-        //         const pdata = {
-        //             'titol' : doc.data().titol,
-        //             'content' : doc.data().contingut,
-        //             'tags' : doc.data().tags,
-        //             'comments' : doc.data().commentaris
-        //         }
-        //     console.log(pdata);
-        //     })
-        // })
-    }
-    
     }
     
 </script>
