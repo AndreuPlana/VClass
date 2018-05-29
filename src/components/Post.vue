@@ -1,7 +1,16 @@
 <template>
   <div>
-      <h1>POST</h1>
-      <p>{{$route.params.postid}}</p>
+      <h1>Post</h1>
+      <ul class="colletction with-header">
+        <li v-for="posts in posts" v-bind:key="posts.id" class="collection-item">
+            <h2>{{posts.titol}}</h2>
+            <p>{{posts.content}}</p>
+            <p>{{posts.tags}}</p>
+        </li>
+    </ul>
+    
+    <router-link to="/"> <a class="waves-effect waves-light btn">Tornar</a></router-link>
+
   </div>
 </template>
 
@@ -12,10 +21,7 @@
     name: 'Post',
     data () {
       return {
-        postid:'',
-        titol: null,
-        contingut: null,
-        tags: null
+        posts:[]
       }
     },
     watch :{
@@ -24,7 +30,17 @@
         }
     },
     created(){
-        alert("createdalert"+this.$route.params.postid);
+        var yeah =this.$route.params.postid;
+        db.collection("posts").doc(yeah).onSnapshot(doc =>{    
+        const pdata = {
+                    'link' : doc.id,
+                    'titol' : doc.data().titol,
+                    'content' : doc.data().contingut,
+                    'tags' : doc.data().tags,
+                    'comments' : doc.data().commentaris
+                }
+        this.posts.push(pdata)     
+    })
     }
     }
     
