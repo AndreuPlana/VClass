@@ -14,7 +14,7 @@
                         <label for="password">Password</label>
                         <input type="password" name="password" id="password" v-model="password" class="form-control">
                     </div>
-                    <input type="submit" value="ENVIAR" class="btn btn-custom">
+                    <button class="btn btn-custom" type="submit"><i class="material-icons">send</i>ENVIAR</button>
                 </form>
             </div>
         </div>
@@ -80,12 +80,11 @@ export default {
          login : function(e){
              firebase.auth().signInWithEmailAndPassword(this.email,this.password)
              .then(user=>{
-                  alert('Logejat Correctament!');
                   this.$router.push('/')
                   window.location.reload();
              },
              error=>{
-                 alert('Login Incorrecte!');
+                 M.toast({html: 'Error Login', classes: 'rounded red'});
              })
         e.preventDefault();
          },
