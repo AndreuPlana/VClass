@@ -38,7 +38,8 @@
 </style>
 <script>
 import db from './firebaseInit';
-import firebase,{ storage } from 'firebase';
+
+import firebase from 'firebase';
 
 export default {
     name:'newPost',
@@ -55,14 +56,16 @@ export default {
         }
     },methods:{
          createpost(event){
-            //  this.file = event.target.file[0];
-             
-            //  this.uploadTask = storage.ref('images').put(this.file);
+             this.file = event.target.form[3].files[0];
+             const ref = firebase.storage().ref();
 
-            //  this.uploadTask.then(Snapshot =>{
-            //      this.downloadURL = this.uploadTask.Snapshot.downloadURL;
+             this.uploadTask = firebase.storage.ref('images').put(this.file);
+             
+
+             this.uploadTask.then(Snapshot =>{
+                 this.downloadURL = this.uploadTask.Snapshot.downloadURL;
                  
-            //  })
+             })
             
              db.collection('posts').add({
                  titol : this.titol,

@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import dashboard from '@/components/dashboard';
 import terms from '@/components/terms';
-import ViewEmployee from '@/components/ViewEmployee';
 import Post from '@/components/Post';
 import Login from '@/components/Login';
 import reset from '@/components/reset';
@@ -86,14 +85,6 @@ let router = new Router({
     {
       path: '*',
       redirect : '/error'
-    },
-    {
-      path: '/:employee_id',
-      name: 'view-employee',
-      component: ViewEmployee,
-      meta: {
-        requiresAuth: true
-      }
     }
   ]
 });

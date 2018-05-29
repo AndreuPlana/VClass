@@ -12,10 +12,10 @@
         </ul>
         <ul class="colletction with-header">
             <li class="collection-header">
-                <h4>categories</h4>
+                <h4>Categories</h4>
             </li>
             <li v-for="categories in categories" v-bind:key="categories.idcat" class="collection-item">
-                 <router-link :to="`/categories/${categories.nom}`">{{categories.nom}}</router-link>
+                 <router-link  :to="`/categories/${categories.nom}`">{{categories.nom}}</router-link>
             </li>
         </ul>
     </div>

@@ -50,10 +50,3 @@ export default {
     } 
 }
 </script>
-
-
-// 'link' : doc.id,
-//                     'titol' : doc.data().titol,
-//                     'content' : doc.data().contingut,
-//                     'tags' : doc.data().tags,
-//                     'comments' : doc.data().commentaris
