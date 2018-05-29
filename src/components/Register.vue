@@ -26,7 +26,10 @@
                 </div>
                 <div class="input-field">
                     <label for="naixement">Data de naixement *</label>
+<<<<<<< HEAD
                     <input type="date" name="naixement" id="naixement" v-model="dnaixement" class="datepicker" required>
+=======
+>>>>>>> 9d8c3e669dbcfa4d73a374b2a2330464c3df5115
                 </div>
                 <div class="input-field">
                     <label for="pais">Pais</label>
