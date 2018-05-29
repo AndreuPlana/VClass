@@ -8,6 +8,7 @@ import reset from '@/components/reset';
 import newpost from '@/components/newpost'
 import categories from '@/components/categories';
 import Register from '@/components/Register';
+import profile from '@/components/profile';
 import errorpage from '@/components/errorpage'
 import firebase from 'firebase';
 
@@ -76,6 +77,14 @@ let router = new Router({
       path: '/post/:postid',
       name: 'Post',
       component: Post
+    },
+    {
+        path: '/profile',
+        name: 'profile',
+        component: profile,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
       path: '/error',

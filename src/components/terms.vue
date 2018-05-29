@@ -1,7 +1,7 @@
 <template>
-    <div class="container mt-5 mb-5 card">
-      <h1 class="centrar mt-3">Termes i condicions</h1>
-      <ol class="justificar">
+    <div class="card col s12 pd-custom-bt">
+      <h1 class="center">Termes i condicions</h1>
+      <ol class="justificar pd-custom-lr">
         <h5><li class="mayus">Introducció</li></h5>
         <p>Les presents condicions generals d'ús de la pàgina web, regulen els termes i condicions d'accés i ús de www.direcciónweb.com, propietat de (indicar el nom de l'empresa o professional propietari de l'portal), amb domicili a (indicar) i amb codi d'identificació fiscal nombre (indicar), d'ara endavant, «l'Empresa», que l'usuari del portal haurà de llegir i acceptar per utilitzar tots els serveis i informació que es faciliten des del portal. El simple accés i / o utilització del portal, de tots o part dels seus continguts i / o serveis significa la plena acceptació de les presents condicions generals d'ús.</p>
         <h5><li class="mayus">Condicions d'ús</li></h5>
@@ -34,8 +34,14 @@
     text-justify: inter-word;
 }
 
-.centrar{
-    text-align: center;
+.pd-custom-lr {
+  padding-left: 50px !important;
+  padding-right: 50px !important;
+}
+
+.pd-custom-bt {
+  padding-bottom: 25px !important;
+  padding-top: 5px !important;
 }
 </style>
 
