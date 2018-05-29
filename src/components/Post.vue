@@ -1,11 +1,25 @@
 <template>
   <div>
       <div>
-      <h1>Post</h1>
+      <h3>Post</h3>
       <ul v-for="posts in posts" v-bind:key="posts.id" class="collection with-header">
           <li class="collection-header"><h4>{{posts.titol}}</h4></li>
           <li class="collection-item"><div>{{posts.content}}</div></li>
       </ul>
+      </div>
+      <div>
+      <h3>Comentaris</h3>
+      <ul v-for="comentaris in comentaris" v-bind:key="comentaris.id" class="collection with-header">
+          <li class="collection-header"><h4>{{comentaris.usuari}}</h4></li>
+          <li class="collection-item"><div>{{comentaris.comentari}}</div></li>
+      </ul>
+      </div>
+      <div>
+        <h3>Comenta!</h3>
+        Comentari: <textarea v-model="comentari" name="" id="" cols="30" rows="10"></textarea>
+        <button type="button" class="waves-effect waves-light btn" v-on:click="addcoment">Comentar</button>
+          
+
       </div>
       <div id="preloader" class="center">
           <div class="preloader-wrapper big active">
@@ -62,7 +76,9 @@
     name: 'Post',
     data () {
       return {
-        posts:[]
+        posts:[],
+        comentaris:[],
+        comentari : ''
       }
     },
     watch :{
@@ -82,7 +98,34 @@
                 }
         this.posts.push(pdata)
         document.getElementById('preloader').style.display = "none";
-    })
+        })
+        db.collection('comentaris').where('idpost','==',yeah).orderBy('time').get().then(querySnapshot=>{
+            querySnapshot.forEach(doc => {
+                const cdata = {
+                'id' : doc.id,
+                'comentari' : doc.data().comentari,
+                'usuari': doc.data().usuari
+                }
+                this.comentaris.push(cdata);
+                console.log(cdata);
+            })
+        })
+
+    }
+    ,methods:{
+        addcoment : function (){
+            if(this.comentari){
+                db.collection('comentaris').add({
+                    comentari : this.comentari,
+                    idpost : this.$route.params.postid,
+                    usuari : firebase.auth().currentUser.displayName,
+                    time : firebase.firestore.FieldValue.serverTimestamp()
+                })
+                M.toast({html: 'Comentari Afegir', classes: 'rounded green'});
+            }else{
+                M.toast({html: 'Comentari buit!', classes: 'rounded red'});
+            }
+        }
     }
     }
     
