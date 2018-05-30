@@ -27,7 +27,7 @@
                     <div class="file-field input-field">
                     <div class="btn">
                         <span>File</span>
-                        <input type="file">
+                        <input type="file" @change="detectFiles($event.target.files)">
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text">
@@ -56,7 +56,8 @@ select{
 </style>
 <script>
 import db from './firebaseInit';
-import firebase,{ storage } from 'firebase';
+
+import firebase ,{storage} from 'firebase';
 export default {
     name:'newPost',
     data(){
@@ -66,13 +67,17 @@ export default {
             categoria:'',
             tags:'',
             usuari:'',
-            file : null,
             uploadTask : '',
             downloadURL : '',
             time :null,
             users:[],
             posts:[],
-            categories:[]
+            categories:[],
+            progressUpload: 0,
+            file: File,
+            uploadTask: '',
+            downloadURL: '',
+
         }
     },created(){
         db.collection('users').get().then(querySnapshot=>{
@@ -109,27 +114,65 @@ export default {
             })
         })
     },methods:{
+        detectFiles (fileList) {
+        Array.from(Array(fileList.length).keys()).map( x => {
+            this.upload(fileList[x])
+        })
+        },
+        upload (file) {
+            
+            this.file = file;
+        }
+        ,
          createpost(event) {
-             //  this.file = event.target.file[0];
+        if (this.titol || this.contingut || this.categoria) {
+             var storageRef = firebase.storage().ref(new Date().getTime()+this.file.name);
+            var uploadTask = storageRef.put(this.file);
+            const data ={
+                titol: this.titol,
+                contingut: this.contingut,
+                categoria: this.categoria,
+                tags: this.tags,
+                usuari: firebase.auth().currentUser.uid,
+                arxiu: this.file.name,
+                time: firebase.firestore.FieldValue.serverTimestamp()
+            }
 
-             //  this.uploadTask = storage.ref('images').put(this.file);
-
-             //  this.uploadTask.then(Snapshot =>{
-             //      this.downloadURL = this.uploadTask.Snapshot.downloadURL;
-
-             //  })
-             if (this.titol || this.contingut || this.categoria) {
-             db.collection('posts').add({
-                 titol: this.titol,
-                 contingut: this.contingut,
-                 categoria: this.categoria,
-                 tags: this.tags,
-                 usuari: firebase.auth().currentUser.uid,
-                 arxiu: this.downloadURL,
-                 time: firebase.firestore.FieldValue.serverTimestamp()
-             })
+            uploadTask.on('state_changed', function(snapshot,data){
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+                case firebase.storage.TaskState.PAUSED: // or 'paused'
+                console.log('Upload is paused');
+                break;
+                case firebase.storage.TaskState.RUNNING: // or 'running'
+                console.log('Upload is running');
+                break;
+            }
+            }, function(error) {
+            // Handle unsuccessful uploads
+            }, function() {
+                
+                uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                db.collection('posts').add({
+                    titol: data.titol,
+                    contingut: data.contingut,
+                    categoria: data.categoria,
+                    tags: data.tags,
+                    usuari: firebase.auth().currentUser.uid,
+                    arxiu : data.arxiu,
+                    link: downloadURL,
+                    time: firebase.firestore.FieldValue.serverTimestamp()
+                    
+                })
+                
+            });
+            });
              M.toast({html: 'Post Creat', classes: 'rounded green'});
              this.$router.push('/');
+            
             } else {
                  M.toast({html: 'Error al Crear Post', classes: 'rounded red'});
             }
