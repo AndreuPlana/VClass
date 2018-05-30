@@ -1,7 +1,7 @@
 <template>
     <div id="profile" class="row card pd-custom-bt">
-        <div class="col offset-s1 s9">
-            <div id="user" class="col s5">
+        <div class="col s12">
+            <div id="user" class="col s3">
                 <div class="foto center">
                     <img v-for="img in images" v-bind:src="img"/>
                     <div id="preloader" class="center">
@@ -48,17 +48,16 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-custom2">VEURE POSTS</button><br><br>
-                <button class="btn btn-custom2">VEURE COMENTARIS</button>
+                <button class="btn btn-custom">VEURE POSTS</button><br><br>
+                <button class="btn btn-custom">VEURE COMENTARIS</button>
             </div>
-            <div class="mayus" v-for="users in users" v-bind:key="users.id">
-                <div v-if="users.currentUser">
-                    <h6>{{users.id}}</h6>
-                    <h6>NAIX: 24/09/1998</h6>
-                    <h6>PAIS: SPAGNA</h6>
-                    <h6>TELEFON: 666555444</h6>
-                    <h6>CP: 08192</h6>
-                </div>
+            <div class="mayus col s6" v-for="users in users" v-bind:key="users.id">
+                <h6 v-if="users.user">USER: {{users.user}}</h6>
+                <h6 v-if="users.nom">NOM: {{users.nom}} {{users.cognoms}}</h6>
+                <h6 v-if="users.dnaixement">NAIX: {{users.dnaixement}}</h6>
+                <h6 v-if="users.pais">PAIS: {{users.pais}}</h6>
+                <h6 v-if="users.telefon">TELEFON: {{users.telefon}}</h6>
+                <h6 v-if="users.cpostal">CP: {{users.cpostal}}</h6>
             </div>
         </div>
     </div>
@@ -78,19 +77,29 @@
             }
         }
         ,created(){
-            db.collection('users').get().then(querySnapshot=>{
-                querySnapshot.forEach(doc =>{
+            var currentUser = firebase.auth().currentUser.uid;
+            var that = this;
+            db.collection("users").doc(currentUser).get().then(function(doc) {
+                if (doc.exists) {
+                    console.log("Document data:", doc.id, doc.data().username, doc.data().nom, doc.data().cognoms);
                     const data = {
-                        'id' :doc.id,
-                        'user':doc.data().usuari,
-                        'nom':doc.data().nom,
-                        'currentUser':firebase.auth().currentUser.uid
+                        'user': doc.data().username,
+                        'nom': doc.data().nom,
+                        'cognoms': doc.data().cognoms,
+                        'cpostal': doc.data().cpostal,
+                        'pais': doc.data().pais,
+                        'telefon': doc.data().telefon,
+                        'dnaixement': doc.data().dnaixement
                     }
                     document.getElementById('preloader').style.display = "none";
-                    this.users.push(data)
-
-                })
-            })
+                    that.users.push(data)
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                }
+            }).catch(function(error) {
+                console.log("Error getting document:", error);
+            });
             db.collection('categories').get().then(querySnapshot=>{
                 querySnapshot.forEach(doc =>{
                     const cdata = {
@@ -119,9 +128,6 @@
 </script>
 
 <style scoped>
-    .gran{
-        font-size: 16rem !important;
-    }
     img{
         width: 100%;
         margin-bottom: 17px;
@@ -139,7 +145,7 @@
         padding-top: 25px !important;
     }
 
-    .btn-custom2 {
+    .btn-custom {
         width: 100%;
     }
 </style>

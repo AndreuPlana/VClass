@@ -80,22 +80,22 @@
                 if(!this.nom || !this.cognoms || !this.dnaixement || !this.username || !this.conditions){
                     M.toast({html: 'Falten camps obligatoris', classes: 'rounded red'});
                 }else{
-                    db.collection('users').add({
-                        username : this.username,
-                        dnaixement : this.dnaixement,
-                        nom : this.nom,
-                        cognoms : this.cognoms,
-                        pais : this.pais,
-                        telefon : this.telefon,
-                        cpostal : this.cpostal
-                    })
                     firebase.auth().createUserWithEmailAndPassword(this.email,this.password)
                         .then(user=>{
                                 M.toast({html: 'Usuari Registrat!', classes: 'rounded green'});
-                                firebase.auth().currentUser.displayName=this.nom;
-                                firebase.auth().currentUser.photoURL='http://www.vibro.no/wp-content/uploads/2018/01/default-user-image.png';
+                                // firebase.auth().currentUser.displayName=this.nom;
+                                // firebase.auth().currentUser.photoURL='http://www.vibro.no/wp-content/uploads/2018/01/default-user-image.png';
                                 this.$router.push("/");
                                 window.location.reload();
+                                db.collection('users').doc(firebase.auth().currentUser.uid).set({
+                                    username : this.username,
+                                    dnaixement : this.dnaixement,
+                                    nom : this.nom,
+                                    cognoms : this.cognoms,
+                                    pais : this.pais,
+                                    telefon : this.telefon,
+                                    cpostal : this.cpostal
+                                })
                             },
                             error=>{
                                 M.toast({html: 'Usuari No Registrat!', classes: 'rounded green'});
