@@ -202,6 +202,13 @@
                     db.collection('users').doc(firebase.auth().currentUser.uid).update({
                         image: this.image
                     })
+                    firebase.auth().currentUser.updateProfile({
+                        photoURL: this.image
+                    }).then(function() {
+                        // TOT OK
+                    }).catch(function(error) {
+                        // An error happened.
+                    });
                     M.toast({html: 'Usuari Modificat', classes: 'rounded green'});
                     e.preventDefault();
                 }

@@ -6,8 +6,8 @@
             <h4>PostsList</h4>
         </li>
         <li v-for="posts in posts" v-bind:key="posts.id" class="collection-item">
-            <router-link :to="`/post/${posts.link}`">{{posts.titol}}</router-link>
-            <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}"><i class="fa fa-eye"></i></router-link>
+            <router-link :to="`/post/${posts.link}`" class=" lletra"><img class="icon-size-post left" v-bind:src="posts.image" alt="foto usuari"><h4>{{posts.titol}}<small class="right sizeSmall">Creat per {{posts.username}}</small></h4></router-link>
+            <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}"></router-link>
         </li>
         <div id="preloaderPost" class="center">
             <div class="preloader-wrapper big active">
@@ -148,7 +148,9 @@ export default {
                     'content' : doc.data().contingut,
                     'tags' : doc.data().tags,
                     'comments' : doc.data().commentaris,
-                    'usuari' : doc.data().usuari
+                    'usuari' : doc.data().usuari,
+                    'image': doc.data().image,
+                    'username': doc.data().username
 
                 }
                 this.posts.push(pdata)
@@ -161,3 +163,18 @@ export default {
     }
 }
 </script>
+
+<style>
+    .sizeSmall{
+        font-size: 40%;
+    }
+
+    .icon-size-post{
+        width: 50px;
+        height: 50px;
+        margin: 1rem 1rem 0 0;
+    }
+    .lletra{
+        color: rgba(0,0,0,0.87);
+    }
+</style>
