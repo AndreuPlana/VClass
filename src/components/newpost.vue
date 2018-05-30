@@ -120,30 +120,31 @@ export default {
         })
         },
         upload (file) {
-            var storageRef = firebase.storage().ref(file.name);
-            storageRef.put(file);
             
+            this.file = file;
         }
         ,
          createpost(event) {
-             console.log(this.file);
-             this.file = event.target.form[4].files[0];
+            console.log(this.file);
 
-             this.uploadTask = firebase.storage.ref('images').put(this.file);
+            var storageRef = firebase.storage().ref(new Date().getTime()+this.file.name);
+            var val = storageRef.put(this.file);
+            
+            val.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                console.log('File available at', downloadURL);
+            });
 
-             //  this.uploadTask.then(Snapshot =>{
-             //      this.downloadURL = this.uploadTask.Snapshot.downloadURL;
 
-             //  })
-             if (this.titol || this.contingut || this.categoria) {
-             db.collection('posts').add({
-                 titol: this.titol,
-                 contingut: this.contingut,
-                 categoria: this.categoria,
-                 tags: this.tags,
-                 usuari: firebase.auth().currentUser.uid,
-                 arxiu: this.downloadURL,
-                 time: firebase.firestore.FieldValue.serverTimestamp()
+            console.log(this.downloadURL);
+            if (this.titol || this.contingut || this.categoria) {
+            db.collection('posts').add({
+                titol: this.titol,
+                contingut: this.contingut,
+                categoria: this.categoria,
+                tags: this.tags,
+                usuari: firebase.auth().currentUser.uid,
+                arxiu: this.downloadURL,
+                time: firebase.firestore.FieldValue.serverTimestamp()
              })
              M.toast({html: 'Post Creat', classes: 'rounded green'});
              this.$router.push('/');
