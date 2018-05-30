@@ -98,7 +98,7 @@ export default {
                 var user = result.user;
 
                 alert('Logejat Correctament!');
-                  this.$router.push('/')
+                  this.$router.push('/');
                   window.location.reload();
                 // ...
             }).catch(function(error) {

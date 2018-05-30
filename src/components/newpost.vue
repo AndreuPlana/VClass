@@ -27,7 +27,7 @@
                     <div class="file-field input-field">
                     <div class="btn">
                         <span>File</span>
-                        <input type="file">
+                        <input type="file" @change="detectFiles($event.target.files)">
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text">
@@ -56,7 +56,8 @@ select{
 </style>
 <script>
 import db from './firebaseInit';
-import firebase,{ storage } from 'firebase';
+
+import firebase from 'firebase';
 export default {
     name:'newPost',
     data(){
@@ -66,13 +67,17 @@ export default {
             categoria:'',
             tags:'',
             usuari:'',
-            file : null,
             uploadTask : '',
             downloadURL : '',
             time :null,
             users:[],
             posts:[],
-            categories:[]
+            categories:[],
+            progressUpload: 0,
+            file: File,
+            uploadTask: '',
+            downloadURL: ''
+            
         }
     },created(){
         db.collection('users').get().then(querySnapshot=>{
@@ -109,10 +114,22 @@ export default {
             })
         })
     },methods:{
+        detectFiles (fileList) {
+        Array.from(Array(fileList.length).keys()).map( x => {
+            this.upload(fileList[x])
+        })
+        },
+        upload (file) {
+            var storageRef = firebase.storage().ref(file.name);
+            storageRef.put(file);
+            
+        }
+        ,
          createpost(event) {
-             //  this.file = event.target.file[0];
+             console.log(this.file);
+             this.file = event.target.form[4].files[0];
 
-             //  this.uploadTask = storage.ref('images').put(this.file);
+             this.uploadTask = firebase.storage.ref('images').put(this.file);
 
              //  this.uploadTask.then(Snapshot =>{
              //      this.downloadURL = this.uploadTask.Snapshot.downloadURL;
