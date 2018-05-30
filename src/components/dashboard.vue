@@ -1,66 +1,110 @@
 <template>
 <div id="dashboard">
     <h3>Main Page</h3>
-    <ul class="colletction with-header">
+    <ul class="collection with-header">
         <li class="collection-header">
             <h4>PostsList</h4>
         </li>
         <li v-for="posts in posts" v-bind:key="posts.id" class="collection-item">
             <router-link :to="`/post/${posts.link}`">{{posts.titol}}</router-link>
-             <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}"><i class="fa fa-eye"></i></router-link>
+            <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}"><i class="fa fa-eye"></i></router-link>
         </li>
+        <div id="preloaderPost" class="center">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+
+                <div class="spinner-layer spinner-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+
+                <div class="spinner-layer spinner-yellow">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+
+                <div class="spinner-layer spinner-green">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+            </div>
+        </div>
     </ul>
-    <ul class="colletction with-header">
+    <ul class="collection with-header">
         <li class="collection-header">
             <h4>categories</h4>
         </li>
         <li v-for="categories in categories" v-bind:key="categories.idcat" class="collection-item">
-             <router-link :to="`/categories/${categories.id}`">{{categories.nom}}</router-link>
+             <router-link :to="`/categories/${categories.nom}`">{{categories.nom}}</router-link>
         </li>
-    </ul>
-    <div id="preloader" class="center">
-        <div class="preloader-wrapper big active">
-            <div class="spinner-layer spinner-blue">
-                <div class="circle-clipper left">
+        <div id="preloaderComment" class="center">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
                     <div class="circle"></div>
-                </div><div class="gap-patch">
-                <div class="circle"></div>
-            </div><div class="circle-clipper right">
-                <div class="circle"></div>
-            </div>
-            </div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
 
-            <div class="spinner-layer spinner-red">
-                <div class="circle-clipper left">
+                <div class="spinner-layer spinner-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
                     <div class="circle"></div>
-                </div><div class="gap-patch">
-                <div class="circle"></div>
-            </div><div class="circle-clipper right">
-                <div class="circle"></div>
-            </div>
-            </div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
 
-            <div class="spinner-layer spinner-yellow">
-                <div class="circle-clipper left">
+                <div class="spinner-layer spinner-yellow">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
                     <div class="circle"></div>
-                </div><div class="gap-patch">
-                <div class="circle"></div>
-            </div><div class="circle-clipper right">
-                <div class="circle"></div>
-            </div>
-            </div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
 
-            <div class="spinner-layer spinner-green">
-                <div class="circle-clipper left">
+                <div class="spinner-layer spinner-green">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
                     <div class="circle"></div>
-                </div><div class="gap-patch">
-                <div class="circle"></div>
-            </div><div class="circle-clipper right">
-                <div class="circle"></div>
-            </div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
             </div>
         </div>
-    </div>
+    </ul>
+
 
 </div>
 </template>
@@ -103,13 +147,15 @@ export default {
                     'titol' : doc.data().titol,
                     'content' : doc.data().contingut,
                     'tags' : doc.data().tags,
-                    'comments' : doc.data().commentaris
+                    'comments' : doc.data().commentaris,
+                    'usuari' : doc.data().usuari
 
                 }
                 this.posts.push(pdata)
                 console.log(pdata);
             })
-            document.getElementById('preloader').style.display = "none";
+            document.getElementById('preloaderPost').style.display = "none";
+            document.getElementById('preloaderComment').style.display = "none";
         })
 
     }
