@@ -125,7 +125,7 @@ export default {
         }
         ,
          createpost(event) {
-        if (this.titol || this.contingut || this.categoria) {
+        if (this.titol && this.contingut && this.categoria) {
              var storageRef = firebase.storage().ref(new Date().getTime()+this.file.name);
             var uploadTask = storageRef.put(this.file);
             const data ={
@@ -154,7 +154,7 @@ export default {
             }, function(error) {
             // Handle unsuccessful uploads
             }, function() {
-                
+
                 uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                 db.collection('posts').add({
                     titol: data.titol,
@@ -165,9 +165,9 @@ export default {
                     arxiu : data.arxiu,
                     link: downloadURL,
                     time: firebase.firestore.FieldValue.serverTimestamp()
-                    
+
                 })
-                
+
             });
             });
              M.toast({html: 'Post Creat', classes: 'rounded green'});
@@ -176,7 +176,7 @@ export default {
             } else {
                  M.toast({html: 'Error al Crear Post', classes: 'rounded red'});
             }
-            
+
         }
 
     }
