@@ -53,8 +53,8 @@
         </div>
         <div>
             <h3>Comentaris</h3>
-            <ul v-for="comentaris in comentaris" v-bind:key="comentaris.id" class="collection with-header">
-                <li class="collection-header"><h4>{{comentaris.usuari}}</h4></li>
+            <ul  class="collection with-header" v-for="comentaris in comentaris" v-bind:key="comentaris.id">
+                <li class="collection-header" v-for="users in users" v-bind:key="users.id"><h4>{{users.user}}</h4></li>
                 <li class="collection-item"><div>{{comentaris.comentari}}</div></li>
 
             </ul>
@@ -78,6 +78,7 @@
         name: 'Post',
         data () {
             return {
+                users: [],
                 posts:[],
                 comentaris:[],
                 comentari : ''
@@ -89,7 +90,9 @@
             }
         },
         created(){
-            var yeah =this.$route.params.postid;
+            var yeah = this.$route.params.postid;
+            var currentUser = comentaris.iduser;
+            var that = this;
             db.collection("posts").doc(yeah).onSnapshot(doc =>{
                 const pdata = {
                     'link' : doc.id,
@@ -106,15 +109,33 @@
                     const cdata = {
                         'id' : doc.id,
                         'comentari' : doc.data().comentari,
-                        'usuari': doc.data().usuari,
-                        'iduser':doc.data().iduser
                     }
                     this.comentaris.push(cdata);
-                    document.getElementById('preloaderComentaris').style.display = "none";
                     console.log(cdata);
                 })
             })
-
+            db.collection("users").doc(comentaris.iduser).get().then(function(doc) {
+                if (doc.exists) {
+                    console.log("Document data:", doc.id, doc.data().username, doc.data().nom, doc.data().cognoms, doc.data().image);
+                    const data = {
+                        'user': doc.data().username,
+                        'nom': doc.data().nom,
+                        'cognoms': doc.data().cognoms,
+                        'cpostal': doc.data().cpostal,
+                        'pais': doc.data().pais,
+                        'telefon': doc.data().telefon,
+                        'dnaixement': doc.data().dnaixement,
+                        'image': doc.data().image
+                    }
+                    console.log(data);
+                    that.users.push(data)
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                }
+            }).catch(function(error) {
+                console.log("Error getting document:", error);
+            });
         }
         ,methods:{
             addcoment : function (){
@@ -122,7 +143,6 @@
                     db.collection('comentaris').add({
                         comentari : this.comentari,
                         idpost : this.$route.params.postid,
-                        usuari : firebase.auth().currentUser.displayName,
                         iduser : firebase.auth().currentUser.uid,
                         time : firebase.firestore.FieldValue.serverTimestamp()
                     })
