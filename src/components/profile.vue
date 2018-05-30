@@ -1,7 +1,7 @@
 <template>
     <div id="profile" class="row card pd-custom-bt">
         <div class="col s12">
-            <div id="user" class="col s3">
+            <div id="user" class="col m3 s6">
                 <div class="foto center">
                     <img v-for="users in users" v-bind:src="users.image"/>
                     <div id="preloader" class="center">
@@ -51,13 +51,55 @@
                 <button class="btn btn-custom">VEURE POSTS</button><br><br>
                 <button class="btn btn-custom">VEURE COMENTARIS</button>
             </div>
-            <div class="mayus col s6" v-for="users in users" v-bind:key="users.id">
+            <div class="mayus col m3 s6" v-for="users in users" v-bind:key="users.id">
                 <h6 v-if="users.user">USER: {{users.user}}</h6>
                 <h6 v-if="users.nom">NOM: {{users.nom}} {{users.cognoms}}</h6>
                 <h6 v-if="users.dnaixement">NAIX: {{users.dnaixement}}</h6>
                 <h6 v-if="users.pais">PAIS: {{users.pais}}</h6>
                 <h6 v-if="users.telefon">TELEFON: {{users.telefon}}</h6>
                 <h6 v-if="users.cpostal">CP: {{users.cpostal}}</h6>
+            </div>
+            <div class="col m6 s12">
+                <form v-for="users in users" v-bind:key="users.id">
+                    <div class="input-field">
+                        <label for="nom" v-if="users.nom">{{users.nom}}</label>
+                        <label for="nom" v-else>Nom *</label>
+                        <input type="text" name="nom" id="nom" class="form-control" v-model="nom" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="cognoms" v-if="users.cognoms">{{users.cognoms}}</label>
+                        <label for="cognoms" v-else>Cognoms *</label>
+                        <input type="text" name="cognoms" id="cognoms" class="form-control" v-model="cognoms" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="naixement" v-if="users.dnaixement">{{users.dnaixement}}</label>
+                        <label for="naixement" v-else>Data de naixement*</label>
+                        <input placeholder="" type="date" name="naixement" id="naixement" v-model="dnaixement" class="form-control" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="pais" v-if="users.pais">{{users.pais}}</label>
+                        <label for="pais" v-else>Pais</label>
+                        <input type="text" name="pais" v-model="pais" id="pais" class="form-control">
+                    </div>
+                    <div class="input-field">
+                        <label for="telefon" v-if="users.telefon">{{users.telefon}}</label>
+                        <label for="telefon" v-else>Telefon</label>
+                        <input type="number" name="telefon" v-model="telefon" id="telefon" class="form-control">
+                    </div>
+                    <div class="input-field">
+                        <label for="codiPostal" v-if="users.cpostal">{{users.cpostal}}</label>
+                        <label for="codiPostal" v-else>Codi Postal</label>
+                        <input type="number" name="codiPostal" v-model="cpostal" id="codiPostal" class="form-control">
+                    </div>
+                    <div class="input-field">
+                        <label for="image">Imatge de Perfil</label>
+                        <input type="text" name="image" v-model="image" id="image" class="form-control">
+                    </div>
+                    <br>
+                    <div class="input-field">
+                        <input type="submit" v-on:click="modificar" value="MODIFICAR" class="btn">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -72,7 +114,14 @@
             return{
                 users:[],
                 posts:[],
-                categories:[]
+                categories:[],
+                nom : '',
+                cognoms : '',
+                dnaixement : '',
+                pais :'',
+                telefon : '',
+                cpostal : '',
+                image : ''
             }
         }
         ,created(){
@@ -80,7 +129,7 @@
             var that = this;
             db.collection("users").doc(currentUser).get().then(function(doc) {
                 if (doc.exists) {
-                    console.log("Document data:", doc.id, doc.data().username, doc.data().nom, doc.data().cognoms, doc.data().image);
+                    // console.log("Document data:", doc.id, doc.data().username, doc.data().nom, doc.data().cognoms, doc.data().image);
                     const data = {
                         'user': doc.data().username,
                         'nom': doc.data().nom,
@@ -123,6 +172,20 @@
                     console.log(pdata);
                 })
             })
+        },
+        methods:{
+            modificar : function (e) {
+                    db.collection('users').doc(firebase.auth().currentUser.uid).update({
+                        dnaixement : this.dnaixement,
+                        nom : this.nom,
+                        cognoms : this.cognoms,
+                        pais : this.pais,
+                        telefon : this.telefon,
+                        cpostal : this.cpostal,
+                        image : this.image
+                    })
+                e.preventDefault();
+            }
         }
     }
 </script>
