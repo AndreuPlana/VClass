@@ -102,12 +102,13 @@ export default {
         db.collection('posts').get().then(querySnapshot=>{
             querySnapshot.forEach(doc =>{
                 const pdata = {
-                    'link' : doc.id,
+                    'link' : doc.data().link,
                     'titol' : doc.data().titol,
                     'content' : doc.data().contingut,
                     'tags' : doc.data().tags,
-                    'comments' : doc.data().commentaris
-
+                    'comments' : doc.data().commentaris,
+                    'image': doc.data().image,
+                    'username': doc.data().username
                 }
                 this.posts.push(pdata)
                 console.log(pdata);
@@ -166,14 +167,13 @@ export default {
                         usuari: firebase.auth().currentUser.uid,
                         arxiu : data.arxiu,
                         link: downloadURL,
-                        time: firebase.firestore.FieldValue.serverTimestamp()
-                        
+                        time: firebase.firestore.FieldValue.serverTimestamp(),
+                        username: firebase.auth().currentUser.displayName,
+                        image: firebase.auth().currentUser.photoURL
                     })
-                    
                 });
                 });
             }else{
-
                 db.collection('posts').add({
                         titol: this.titol,
                         contingut: this.contingut,
@@ -182,19 +182,17 @@ export default {
                         usuari: firebase.auth().currentUser.uid,
                         arxiu : '',
                         link: '',
-                        time: firebase.firestore.FieldValue.serverTimestamp()
-                        
+                        time: firebase.firestore.FieldValue.serverTimestamp(),
+                        username: firebase.auth().currentUser.displayName,
+                        image: firebase.auth().currentUser.photoURL
                     })
             }
              M.toast({html: 'Post Creat', classes: 'rounded green'});
              this.$router.push('/');
-            
             } else {
                  M.toast({html: 'Error al Crear Post', classes: 'rounded red'});
             }
-            
         }
-
     }
     
 }

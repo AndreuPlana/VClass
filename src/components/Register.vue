@@ -97,7 +97,8 @@
                                     image: 'https://firebasestorage.googleapis.com/v0/b/virtualclassroom-d806b.appspot.com/o/add_image.PNG?alt=media&token=22c97627-6bda-4ee6-bcb0-76696c53c337'
                                 })
                                 firebase.auth().currentUser.updateProfile({
-                                    displayName: this.username
+                                    displayName: this.username,
+                                    photoURL: "https://firebasestorage.googleapis.com/v0/b/virtualclassroom-d806b.appspot.com/o/add_image.PNG?alt=media&token=22c97627-6bda-4ee6-bcb0-76696c53c337"
                                 }).then(function() {
                                     // TOT OK
                                 }).catch(function(error) {
