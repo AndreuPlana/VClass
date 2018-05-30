@@ -9,6 +9,7 @@ import newpost from '@/components/newpost'
 import categories from '@/components/categories';
 import Register from '@/components/Register';
 import profile from '@/components/profile';
+import perfil from '@/components/perfil';
 import errorpage from '@/components/errorpage'
 import firebase from 'firebase';
 
@@ -28,6 +29,14 @@ let router = new Router({
       path: '/newpost',
       name: 'Nou Post',
       component: newpost,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/perfil/:idpost',
+      name: 'Perfil',
+      component: perfil,
       meta: {
         requiresAuth: true
       }
