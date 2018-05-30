@@ -50,6 +50,15 @@
                 </div>
                 <router-link :to="`/postsuser/${users.id}`"><button class="btn btn-custom">VEURE POSTS</button></router-link><br><br>
                 <button class="btn btn-custom">VEURE COMENTARIS</button>
+                <div class="input-field">
+                    <form>
+                        <label for="image">Imatge de Perfil</label>
+                        <input type="text" name="image" v-model="image" id="image" class="form-control">
+                        <div class="input-field">
+                            <input type="submit" v-on:click="modificarImatge" value="MODIFICAR" class="btn">
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="mayus col m3 s6" v-for="users in users" v-bind:key="users.id">
                 <h6 v-if="users.user">USER: {{users.user}}</h6>
@@ -90,10 +99,6 @@
                         <label for="codiPostal" v-if="users.cpostal">{{users.cpostal}}</label>
                         <label for="codiPostal" v-else>Codi Postal</label>
                         <input type="number" name="codiPostal" v-model="cpostal" id="codiPostal" class="form-control">
-                    </div>
-                    <div class="input-field">
-                        <label for="image">Imatge de Perfil</label>
-                        <input type="text" name="image" v-model="image" id="image" class="form-control">
                     </div>
                     <br>
                     <div class="input-field">
@@ -175,18 +180,33 @@
                 })
             })
         },
-        methods:{
-            modificar : function (e) {
+        methods: {
+            modificar: function (e) {
+                if (!this.nom || !this.cognoms || !this.dnaixement) {
+                    M.toast({html: 'Error al Modificar Usuari', classes: 'rounded red'});
+                } else {
                     db.collection('users').doc(firebase.auth().currentUser.uid).update({
-                        dnaixement : this.dnaixement,
-                        nom : this.nom,
-                        cognoms : this.cognoms,
-                        pais : this.pais,
-                        telefon : this.telefon,
-                        cpostal : this.cpostal,
-                        image : this.image
+                        dnaixement: this.dnaixement,
+                        nom: this.nom,
+                        cognoms: this.cognoms,
+                        pais: this.pais,
+                        telefon: this.telefon,
+                        cpostal: this.cpostal
                     })
-                e.preventDefault();
+                    M.toast({html: 'Usuari Modificat', classes: 'rounded green'});
+                    e.preventDefault();
+                }
+            },
+            modificarImatge: function (e) {
+                if (!this.image) {
+                    M.toast({html: 'Error al Modificar Usuari', classes: 'rounded red'});
+                } else {
+                    db.collection('users').doc(firebase.auth().currentUser.uid).update({
+                        image: this.image
+                    })
+                    M.toast({html: 'Usuari Modificat', classes: 'rounded green'});
+                    e.preventDefault();
+                }
             }
         }
     }

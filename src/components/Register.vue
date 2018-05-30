@@ -86,9 +86,6 @@
                                 M.toast({html: 'Usuari Registrat!', classes: 'rounded green'});
                                 // firebase.auth().currentUser.displayName=this.nom;
                                 // firebase.auth().currentUser.photoURL='http://www.vibro.no/wp-content/uploads/2018/01/default-user-image.png';
-                                for (users in users) {
-                                    users.username
-                                }
                                 db.collection('users').doc(firebase.auth().currentUser.uid).set({
                                     username: this.username,
                                     dnaixement: this.dnaixement,
@@ -99,6 +96,13 @@
                                     cpostal: this.cpostal,
                                     image: 'https://firebasestorage.googleapis.com/v0/b/virtualclassroom-d806b.appspot.com/o/add_image.PNG?alt=media&token=22c97627-6bda-4ee6-bcb0-76696c53c337'
                                 })
+                                firebase.auth().currentUser.updateProfile({
+                                    displayName: this.username
+                                }).then(function() {
+                                    // TOT OK
+                                }).catch(function(error) {
+                                    // An error happened.
+                                });
                                 this.$router.push("/");
                             },
                             error => {

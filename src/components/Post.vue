@@ -53,54 +53,11 @@
         </div>
         <div>
             <h3>Comentaris</h3>
-            <ul v-for="comentaris in comentaris" v-bind:key="comentaris.id" class="collection with-header">
-                <li class="collection-header"><h4>{{comentaris.usuari}}</h4></li>
+            <ul  class="collection with-header" v-for="comentaris in comentaris" v-bind:key="comentaris.id">
+                <li class="collection-header"><h5><router-link :to="`/perfil/${comentaris.iduser}`">{{comentaris.username}}</router-link></h5></li>
                 <li class="collection-item"><div>{{comentaris.comentari}}</div></li>
 
             </ul>
-            <div id="preloaderComentaris" class="center">
-            <div class="preloader-wrapper big active">
-                <div class="spinner-layer spinner-blue">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div><div class="gap-patch">
-                    <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                    <div class="circle"></div>
-                </div>
-                </div>
-
-                <div class="spinner-layer spinner-red">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div><div class="gap-patch">
-                    <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                    <div class="circle"></div>
-                </div>
-                </div>
-
-                <div class="spinner-layer spinner-yellow">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div><div class="gap-patch">
-                    <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                    <div class="circle"></div>
-                </div>
-                </div>
-
-                <div class="spinner-layer spinner-green">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div><div class="gap-patch">
-                    <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                    <div class="circle"></div>
-                </div>
-                </div>
-            </div>
-        </div>
         </div>
         <div>
             <h3>Comenta!</h3>
@@ -121,6 +78,7 @@
         name: 'Post',
         data () {
             return {
+                users: [],
                 posts:[],
                 comentaris:[],
                 comentari : '',
@@ -133,7 +91,8 @@
             }
         },
         created(){
-            var yeah =this.$route.params.postid;
+            var yeah = this.$route.params.postid;
+            var currentUser = firebase.auth().currentUser.uid;
             db.collection("posts").doc(yeah).onSnapshot(doc =>{
                 const pdata = {
                     'link' : doc.id,
@@ -150,24 +109,23 @@
                     const cdata = {
                         'id' : doc.id,
                         'comentari' : doc.data().comentari,
-                        'usuari': doc.data().usuari,
-                        'iduser':doc.data().iduser
+                        'username': doc.data().username,
+                        'iduser': doc.data().iduser
                     }
+                    currentUser = doc.data().iduser;
                     this.comentaris.push(cdata);
-                    document.getElementById('preloaderComentaris').style.display = "none";
                     console.log(cdata);
                 })
             })
-
-        }
-        ,methods:{
+        },
+        methods:{
             addcoment : function (){
                 if(this.comentari){
                         db.collection('comentaris').add({
                         comentari : this.comentari,
                         idpost : this.$route.params.postid,
-                        usuari : firebase.auth().currentUser.displayName,
                         iduser : firebase.auth().currentUser.uid,
+                        username: firebase.auth().currentUser.displayName,
                         time : firebase.firestore.FieldValue.serverTimestamp()
                     })
                     M.toast({html: 'Comentari Afegir', classes: 'rounded green'});
