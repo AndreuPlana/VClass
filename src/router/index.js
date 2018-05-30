@@ -7,6 +7,7 @@ import Login from '@/components/Login';
 import reset from '@/components/reset';
 import newpost from '@/components/newpost'
 import categories from '@/components/categories';
+import postsuser from '@/components/postsuser';
 import Register from '@/components/Register';
 import profile from '@/components/profile';
 import perfil from '@/components/perfil';
@@ -34,7 +35,7 @@ let router = new Router({
       }
     },
     {
-      path: '/perfil/:idpost',
+      path: '/perfil/:iduser',
       name: 'Perfil',
       component: perfil,
       meta: {
@@ -45,6 +46,14 @@ let router = new Router({
       path: '/categories/:categoria',
       name: 'Categories',
       component: categories,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/postsuser/:iduser',
+      name: 'postsuser',
+      component: postsuser,
       meta: {
         requiresAuth: true
       }

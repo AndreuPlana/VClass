@@ -48,7 +48,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-custom">VEURE POSTS</button><br><br>
+                <router-link :to="`/postsuser/${users.id}`"><button class="btn btn-custom">VEURE POSTS</button></router-link><br><br>
                 <button class="btn btn-custom">VEURE COMENTARIS</button>
             </div>
             <div class="mayus col m3 s6" v-for="users in users" v-bind:key="users.id">
@@ -131,6 +131,7 @@
                 if (doc.exists) {
                     // console.log("Document data:", doc.id, doc.data().username, doc.data().nom, doc.data().cognoms, doc.data().image);
                     const data = {
+                        'id' : doc.id,
                         'user': doc.data().username,
                         'nom': doc.data().nom,
                         'cognoms': doc.data().cognoms,
@@ -140,6 +141,7 @@
                         'dnaixement': doc.data().dnaixement,
                         'image': doc.data().image
                     }
+                    console.log(data);
                     document.getElementById('preloader').style.display = "none";
                     that.users.push(data)
                 } else {

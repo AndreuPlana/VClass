@@ -3,7 +3,7 @@
         <div>
             <h3>Post</h3>
             <ul v-for="posts in posts" v-bind:key="posts.id" class="collection with-header">
-                <li class="collection-header"><h4>{{posts.titol}}</h4></li>
+                <li class="collection-header"> <h4>{{posts.titol}}</h4></li>
                 <li class="collection-item"><div>{{posts.content}}</div></li>
 
             </ul>
@@ -116,14 +116,15 @@
 
 <script>
     import db from './firebaseInit'
-    import firebase from 'firebase'
+    import firebase,{ firestore } from 'firebase'
     export default {
         name: 'Post',
         data () {
             return {
                 posts:[],
                 comentaris:[],
-                comentari : ''
+                comentari : '',
+                users:[]
             }
         },
         watch :{
@@ -162,7 +163,7 @@
         ,methods:{
             addcoment : function (){
                 if(this.comentari){
-                    db.collection('comentaris').add({
+                        db.collection('comentaris').add({
                         comentari : this.comentari,
                         idpost : this.$route.params.postid,
                         usuari : firebase.auth().currentUser.displayName,
