@@ -3,7 +3,7 @@
         <div class="col s12">
             <div id="user" class="col s3">
                 <div class="foto center">
-                    <img v-for="img in images" v-bind:src="img"/>
+                    <img v-for="users in users" v-bind:src="users.image"/>
                     <div id="preloader" class="center">
                         <div class="preloader-wrapper big active">
                             <div class="spinner-layer spinner-blue">
@@ -72,8 +72,7 @@
             return{
                 users:[],
                 posts:[],
-                categories:[],
-                images:['https://firebasestorage.googleapis.com/v0/b/virtualclassroom-d806b.appspot.com/o/add_image.PNG?alt=media&token=22c97627-6bda-4ee6-bcb0-76696c53c337']
+                categories:[]
             }
         }
         ,created(){
@@ -81,7 +80,7 @@
             var that = this;
             db.collection("users").doc(currentUser).get().then(function(doc) {
                 if (doc.exists) {
-                    console.log("Document data:", doc.id, doc.data().username, doc.data().nom, doc.data().cognoms);
+                    console.log("Document data:", doc.id, doc.data().username, doc.data().nom, doc.data().cognoms, doc.data().image);
                     const data = {
                         'user': doc.data().username,
                         'nom': doc.data().nom,
@@ -89,7 +88,8 @@
                         'cpostal': doc.data().cpostal,
                         'pais': doc.data().pais,
                         'telefon': doc.data().telefon,
-                        'dnaixement': doc.data().dnaixement
+                        'dnaixement': doc.data().dnaixement,
+                        'image': doc.data().image
                     }
                     document.getElementById('preloader').style.display = "none";
                     that.users.push(data)
@@ -147,5 +147,8 @@
 
     .btn-custom {
         width: 100%;
+    }
+
+    .size{
     }
 </style>
