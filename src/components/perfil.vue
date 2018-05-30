@@ -1,7 +1,7 @@
 <template>
     <div id="profile" class="row card pd-custom-bt">
         <div class="col s12">
-            <div id="user" class="col s3">
+            <div id="user" class="col m3 s6">
                 <div class="foto center">
                     <img v-for="users in users" v-bind:src="users.image"/>
                     <div id="preloader" class="center">
@@ -51,7 +51,7 @@
                 <button class="btn btn-custom">VEURE POSTS</button><br><br>
                 <button class="btn btn-custom">VEURE COMENTARIS</button>
             </div>
-            <div class="mayus col s6" v-for="users in users" v-bind:key="users.id">
+            <div class="mayus col m3 s6" v-for="users in users" v-bind:key="users.id">
                 <h6 v-if="users.user">USER: {{users.user}}</h6>
                 <h6 v-if="users.nom">NOM: {{users.nom}} {{users.cognoms}}</h6>
                 <h6 v-if="users.dnaixement">NAIX: {{users.dnaixement}}</h6>
@@ -59,6 +59,7 @@
                 <h6 v-if="users.telefon">TELEFON: {{users.telefon}}</h6>
                 <h6 v-if="users.cpostal">CP: {{users.cpostal}}</h6>
             </div>
+            
         </div>
     </div>
 </template>
@@ -67,12 +68,19 @@
     import db from './firebaseInit';
     import firebase,{ storage } from 'firebase';
     export default {
-        name: "profile",
+        name: "perfil",
         data(){
             return{
                 users:[],
                 posts:[],
-                categories:[]
+                categories:[],
+                nom : '',
+                cognoms : '',
+                dnaixement : '',
+                pais :'',
+                telefon : '',
+                cpostal : '',
+                image : ''
             }
         },
         watch :{
@@ -82,11 +90,12 @@
         }
         ,created(){
             var currentUser = firebase.auth().currentUser.uid;
+            var yeah =this.$route.params.idpost;
+            //console.log(yeah);
             var that = this;
-            var yeah = $route.params.iduser;
             db.collection("users").doc(yeah).get().then(function(doc) {
                 if (doc.exists) {
-                    console.log("Document data:", doc.id, doc.data().username, doc.data().nom, doc.data().cognoms, doc.data().image);
+                    // console.log("Document data:", doc.id, doc.data().username, doc.data().nom, doc.data().cognoms, doc.data().image);
                     const data = {
                         'user': doc.data().username,
                         'nom': doc.data().nom,
@@ -129,6 +138,20 @@
                     console.log(pdata);
                 })
             })
+        },
+        methods:{
+            modificar : function (e) {
+                    db.collection('users').doc(firebase.auth().currentUser.uid).update({
+                        dnaixement : this.dnaixement,
+                        nom : this.nom,
+                        cognoms : this.cognoms,
+                        pais : this.pais,
+                        telefon : this.telefon,
+                        cpostal : this.cpostal,
+                        image : this.image
+                    })
+                e.preventDefault();
+            }
         }
     }
 </script>
