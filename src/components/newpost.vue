@@ -74,7 +74,7 @@ export default {
             posts:[],
             categories:[],
             progressUpload: 0,
-            file: File,
+            file: null,
             uploadTask: '',
             downloadURL: '',
 
@@ -120,56 +120,72 @@ export default {
         })
         },
         upload (file) {
-            
+            if(file){
             this.file = file;
+            }
         }
         ,
          createpost(event) {
         if (this.titol || this.contingut || this.categoria) {
-             var storageRef = firebase.storage().ref(new Date().getTime()+this.file.name);
-            var uploadTask = storageRef.put(this.file);
-            const data ={
-                titol: this.titol,
-                contingut: this.contingut,
-                categoria: this.categoria,
-                tags: this.tags,
-                usuari: firebase.auth().currentUser.uid,
-                arxiu: this.file.name,
-                time: firebase.firestore.FieldValue.serverTimestamp()
-            }
-
-            uploadTask.on('state_changed', function(snapshot,data){
-            // Observe state change events such as progress, pause, and resume
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log('Upload is ' + progress + '% done');
-            switch (snapshot.state) {
-                case firebase.storage.TaskState.PAUSED: // or 'paused'
-                console.log('Upload is paused');
-                break;
-                case firebase.storage.TaskState.RUNNING: // or 'running'
-                console.log('Upload is running');
-                break;
-            }
-            }, function(error) {
-            // Handle unsuccessful uploads
-            }, function() {
-                
-                uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                db.collection('posts').add({
-                    titol: data.titol,
-                    contingut: data.contingut,
-                    categoria: data.categoria,
-                    tags: data.tags,
+             
+            if(this.file){
+                var storageRef = firebase.storage().ref(new Date().getTime()+this.file.name);
+                var uploadTask = storageRef.put(this.file);
+                const data ={
+                    titol: this.titol,
+                    contingut: this.contingut,
+                    categoria: this.categoria,
+                    tags: this.tags,
                     usuari: firebase.auth().currentUser.uid,
-                    arxiu : data.arxiu,
-                    link: downloadURL,
+                    arxiu: this.file.name,
                     time: firebase.firestore.FieldValue.serverTimestamp()
+                }
+                uploadTask.on('state_changed', function(snapshot,data){
+                // Observe state change events such as progress, pause, and resume
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                    case firebase.storage.TaskState.PAUSED: // or 'paused'
+                    console.log('Upload is paused');
+                    break;
+                    case firebase.storage.TaskState.RUNNING: // or 'running'
+                    console.log('Upload is running');
+                    break;
+                }
+                }, function(error) {
+                // Handle unsuccessful uploads
+                }, function() {
                     
-                })
-                
-            });
-            });
+                    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                    db.collection('posts').add({
+                        titol: data.titol,
+                        contingut: data.contingut,
+                        categoria: data.categoria,
+                        tags: data.tags,
+                        usuari: firebase.auth().currentUser.uid,
+                        arxiu : data.arxiu,
+                        link: downloadURL,
+                        time: firebase.firestore.FieldValue.serverTimestamp()
+                        
+                    })
+                    
+                });
+                });
+            }else{
+
+                db.collection('posts').add({
+                        titol: this.titol,
+                        contingut: this.contingut,
+                        categoria: this.categoria,
+                        tags: this.tags,
+                        usuari: firebase.auth().currentUser.uid,
+                        arxiu : '',
+                        link: '',
+                        time: firebase.firestore.FieldValue.serverTimestamp()
+                        
+                    })
+            }
              M.toast({html: 'Post Creat', classes: 'rounded green'});
              this.$router.push('/');
             
