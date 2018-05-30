@@ -106,7 +106,8 @@
                     const cdata = {
                         'id' : doc.id,
                         'comentari' : doc.data().comentari,
-                        'usuari': doc.data().usuari
+                        'usuari': doc.data().usuari,
+                        'iduser':doc.data().iduser
                     }
                     this.comentaris.push(cdata);
                     document.getElementById('preloaderComentaris').style.display = "none";
@@ -122,6 +123,7 @@
                         comentari : this.comentari,
                         idpost : this.$route.params.postid,
                         usuari : firebase.auth().currentUser.displayName,
+                        iduser : firebase.auth().currentUser.uid,
                         time : firebase.firestore.FieldValue.serverTimestamp()
                     })
                     M.toast({html: 'Comentari Afegir', classes: 'rounded green'});
