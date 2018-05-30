@@ -116,7 +116,7 @@
 
 <script>
     import db from './firebaseInit'
-    import firebase from 'firebase'
+    import firebase,{ functions } from 'firebase'
     export default {
         name: 'Post',
         data () {
@@ -167,7 +167,11 @@
                         usuari : firebase.auth().currentUser.displayName,
                         time : firebase.firestore.FieldValue.serverTimestamp()
                     })
+
                     M.toast({html: 'Comentari Afegir', classes: 'rounded green'});
+                    //console.log(firebase.auth().currentUser);
+                    window.location.reload();
+
                 }else{
                     M.toast({html: 'Comentari buit!', classes: 'rounded red'});
                 }

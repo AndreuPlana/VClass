@@ -57,7 +57,7 @@
 </template>
 
 <script>
-    import firebase from 'firebase';
+    import firebase,{ auth } from 'firebase';
     import db from './firebaseInit';
     export default {
         name:'Register',
@@ -72,7 +72,8 @@
                 conditions : false,
                 pais :'',
                 telefon : '',
-                cpostal : ''
+                cpostal : '',
+                puser : ''
             }
         },
         methods:{
@@ -80,6 +81,16 @@
                 if(!this.nom || !this.cognoms || !this.dnaixement || !this.username || !this.conditions){
                     M.toast({html: 'Falten camps obligatoris', classes: 'rounded red'});
                 }else{
+                    firebase.auth().createUserWithEmailAndPassword(this.email,this.password)
+                        .then(user=>{
+                                M.toast({html: 'Usuari Registrat!', classes: 'rounded green'});
+                                //(this.$router.push("/");
+                                
+                            },
+                            error=>{
+                                M.toast({html: 'Usuari No Registrat!', classes: 'rounded green'});
+                            })
+
                     db.collection('users').add({
                         username : this.username,
                         dnaixement : this.dnaixement,
@@ -87,22 +98,20 @@
                         cognoms : this.cognoms,
                         pais : this.pais,
                         telefon : this.telefon,
-                        cpostal : this.cpostal
-                    })
-                    firebase.auth().createUserWithEmailAndPassword(this.email,this.password)
-                        .then(user=>{
-                                M.toast({html: 'Usuari Registrat!', classes: 'rounded green'});
-                                firebase.auth().currentUser.displayName=this.nom;
-                                firebase.auth().currentUser.photoURL='http://www.vibro.no/wp-content/uploads/2018/01/default-user-image.png';
-                                this.$router.push("/");
-                                window.location.reload();
-                            },
-                            error=>{
-                                M.toast({html: 'Usuari No Registrat!', classes: 'rounded green'});
+                        cpostal : this.cpostal,
+                        userid : ''
+                    }).then(function(docRef) {
+                        if(docRef.id)
+                        {
+                             db.collection('users').doc(docRef.id).update({
+                                userid : firebase.auth().currentUser.uid
                             })
-                    e.preventDefault();
-                }
+                        }
+                    });                    
+
+}
             }
+
         }
     }
 </script>
