@@ -67,23 +67,18 @@
     import db from './firebaseInit';
     import firebase,{ storage } from 'firebase';
     export default {
-        name: "profile",
+        name: "perfil",
         data(){
             return{
                 users:[],
                 posts:[],
                 categories:[]
             }
-        },
-        watch :{
-            '$route'(to,from){
-                alert(to.params.iduser);
-            }
         }
         ,created(){
             var currentUser = firebase.auth().currentUser.uid;
             var that = this;
-            db.collection("users").doc($route.params.iduser).get().then(function(doc) {
+            db.collection("users").doc(currentUser).get().then(function(doc) {
                 if (doc.exists) {
                     console.log("Document data:", doc.id, doc.data().username, doc.data().nom, doc.data().cognoms, doc.data().image);
                     const data = {
