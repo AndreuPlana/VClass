@@ -72,7 +72,8 @@
                 conditions : false,
                 pais :'',
                 telefon : '',
-                cpostal : ''
+                cpostal : '',
+                image : ''
             }
         },
         methods:{
@@ -85,8 +86,6 @@
                                 M.toast({html: 'Usuari Registrat!', classes: 'rounded green'});
                                 // firebase.auth().currentUser.displayName=this.nom;
                                 // firebase.auth().currentUser.photoURL='http://www.vibro.no/wp-content/uploads/2018/01/default-user-image.png';
-                                // this.$router.push("/");
-                                // window.location.reload();
                                 db.collection('users').doc(firebase.auth().currentUser.uid).set({
                                     username : this.username,
                                     dnaixement : this.dnaixement,
@@ -94,8 +93,10 @@
                                     cognoms : this.cognoms,
                                     pais : this.pais,
                                     telefon : this.telefon,
-                                    cpostal : this.cpostal
+                                    cpostal : this.cpostal,
+                                    image : 'https://firebasestorage.googleapis.com/v0/b/virtualclassroom-d806b.appspot.com/o/add_image.PNG?alt=media&token=22c97627-6bda-4ee6-bcb0-76696c53c337'
                                 })
+                                this.$router.push("/");
                             },
                             error=>{
                                 M.toast({html: 'Usuari No Registrat!', classes: 'rounded green'});
