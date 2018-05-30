@@ -57,7 +57,7 @@ select{
 <script>
 import db from './firebaseInit';
 
-import firebase from 'firebase';
+import firebase ,{storage} from 'firebase';
 export default {
     name:'newPost',
     data(){
@@ -76,8 +76,8 @@ export default {
             progressUpload: 0,
             file: File,
             uploadTask: '',
-            downloadURL: ''
-            
+            downloadURL: '',
+
         }
     },created(){
         db.collection('users').get().then(querySnapshot=>{
@@ -125,29 +125,54 @@ export default {
         }
         ,
          createpost(event) {
-            console.log(this.file);
-
-            var storageRef = firebase.storage().ref(new Date().getTime()+this.file.name);
-            var val = storageRef.put(this.file);
-            
-            val.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                console.log('File available at', downloadURL);
-            });
-
-
-            console.log(this.downloadURL);
-            if (this.titol || this.contingut || this.categoria) {
-            db.collection('posts').add({
+        if (this.titol || this.contingut || this.categoria) {
+             var storageRef = firebase.storage().ref(new Date().getTime()+this.file.name);
+            var uploadTask = storageRef.put(this.file);
+            const data ={
                 titol: this.titol,
                 contingut: this.contingut,
                 categoria: this.categoria,
                 tags: this.tags,
                 usuari: firebase.auth().currentUser.uid,
-                arxiu: this.downloadURL,
+                arxiu: this.file.name,
                 time: firebase.firestore.FieldValue.serverTimestamp()
-             })
+            }
+
+            uploadTask.on('state_changed', function(snapshot,data){
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+                case firebase.storage.TaskState.PAUSED: // or 'paused'
+                console.log('Upload is paused');
+                break;
+                case firebase.storage.TaskState.RUNNING: // or 'running'
+                console.log('Upload is running');
+                break;
+            }
+            }, function(error) {
+            // Handle unsuccessful uploads
+            }, function() {
+                
+                uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                db.collection('posts').add({
+                    titol: data.titol,
+                    contingut: data.contingut,
+                    categoria: data.categoria,
+                    tags: data.tags,
+                    usuari: firebase.auth().currentUser.uid,
+                    arxiu : data.arxiu,
+                    link: downloadURL,
+                    time: firebase.firestore.FieldValue.serverTimestamp()
+                    
+                })
+                
+            });
+            });
              M.toast({html: 'Post Creat', classes: 'rounded green'});
              this.$router.push('/');
+            
             } else {
                  M.toast({html: 'Error al Crear Post', classes: 'rounded red'});
             }
