@@ -8,7 +8,7 @@
             <li v-for="categories in categories" v-bind:key="categories.idcat" class="collection-item">
                 <router-link :to="`/categories/${categories.nom}`"><h5>{{categories.nom}}</h5></router-link>
             </li>
-            <div id="preloaderComment" class="center">
+            <div id="preloaderComment" class="center margin">
                 <div class="preloader-wrapper big active">
                     <div class="spinner-layer spinner-blue">
                         <div class="circle-clipper left">
@@ -61,7 +61,7 @@
                 <router-link :to="`/post/${posts.link}`" class=" lletra"><img class="icon-size-post left" v-bind:src="posts.image" alt="foto usuari"><h5>{{posts.titol}}<small class="right sizeSmall">Creat per {{posts.username}}</small></h5></router-link>
                 <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}"></router-link>
             </li>
-            <div id="preloaderPost" class="center">
+            <div id="preloaderPost" class="center margin">
                 <div class="preloader-wrapper big active">
                     <div class="spinner-layer spinner-blue">
                         <div class="circle-clipper left">
@@ -173,13 +173,13 @@
     .icon-size-post{
         width: 50px;
         height: 50px;
-        margin: 0 1rem 0 0;
+        margin: 0 1rem 0 0 !important;
     }
     .lletra{
         color: rgba(0,0,0,0.87);
     }
 
-    .collection-header-background{
-
+    .margin{
+        margin: 10px;
     }
 </style>

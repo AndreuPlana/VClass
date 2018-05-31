@@ -12,7 +12,7 @@
                     <i class="fa fa-eye"></i>
                 </router-link>
             </li>
-            <div id="preloaderPost" class="center">
+            <div id="preloaderPost" class="center margin">
                 <div class="preloader-wrapper big active">
                     <div class="spinner-layer spinner-blue">
                         <div class="circle-clipper left">
