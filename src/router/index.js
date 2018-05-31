@@ -11,7 +11,9 @@ import Register from '@/components/Register';
 import profile from '@/components/profile';
 import perfil from '@/components/perfil';
 import postsPropis from '@/components/postsPropis';
+import postsUsers from '@/components/postsUsers';
 import comentarisPropis from '@/components/comentarisPropis';
+import comentarisUsers from '@/components/comentarisUsers';
 import errorpage from '@/components/errorpage';
 import firebase from 'firebase';
 
@@ -36,7 +38,7 @@ let router = new Router({
             }
         },
         {
-            path: '/perfil/:idpost',
+            path: '/perfil/:userid',
             name: 'Perfil',
             component: perfil,
             meta: {
@@ -88,6 +90,16 @@ let router = new Router({
             path: '/post/:postid',
             name: 'Post',
             component: Post
+        },
+        {
+            path: '/posts-users/:userid',
+            name: 'postsUsers',
+            component: postsUsers
+        },
+        {
+            path: '/comentaris-users/:userid',
+            name: 'comentarisUsers',
+            component: comentarisUsers
         },
         {
             path: '/profile',

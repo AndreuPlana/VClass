@@ -48,8 +48,8 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-custom">VEURE POSTS</button><br><br>
-                <button class="btn btn-custom">VEURE COMENTARIS</button>
+                <router-link v-for="users in users" :to="`/posts-users/${users.link}`"><button class="btn btn-custom">VEURE POSTS</button><br><br></router-link>
+                <router-link v-for="users in users" :to="`/comentaris-users/${users.link}`"><button class="btn btn-custom">VEURE COMENTARIS</button></router-link>
             </div>
             <div class="mayus col m3 s6" v-for="users in users" v-bind:key="users.id">
                 <h6 v-if="users.user">USER: {{users.user}}</h6>
@@ -90,7 +90,8 @@
         }
         ,created(){
             var currentUser = firebase.auth().currentUser.uid;
-            var yeah =this.$route.params.idpost;
+            var yeah =this.$route.params.userid;
+
             //console.log(yeah);
             var that = this;
             db.collection("users").doc(yeah).get().then(function(doc) {
@@ -104,7 +105,8 @@
                         'pais': doc.data().pais,
                         'telefon': doc.data().telefon,
                         'dnaixement': doc.data().dnaixement,
-                        'image': doc.data().image
+                        'image': doc.data().image,
+                        'link': doc.id
                     }
                     document.getElementById('preloader').style.display = "none";
                     that.users.push(data)
