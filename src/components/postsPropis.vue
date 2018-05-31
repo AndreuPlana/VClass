@@ -6,7 +6,7 @@
             </li>
             <li v-for="posts in posts" v-bind:key="posts.id" class="collection-item">
                 <router-link :to="`/post/${posts.link}`" class=" lletra"><img class="icon-size-post left" v-bind:src="posts.image" alt="foto usuari"><h5>{{posts.titol}}<small class="right sizeSmall">Creat per {{posts.username}}</small></h5></router-link>
-                <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}"></router-link>
+                <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}"></router-link><a class="btn red" v-on:click="eliminar(posts.link)"><i class="material-icons">delete</i></a>
             </li>
             <div id="preloaderPost" class="center">
                 <div class="preloader-wrapper big active">
@@ -62,7 +62,8 @@
         name: "postsPropis",
         data(){
             return{
-                posts:[]
+                posts:[],
+                idpost: ''
             }
         },
         watch :{
@@ -89,6 +90,16 @@
                     console.log(pdata);
                 })
             })
+        },
+        methods:{
+            eliminar: function(postId){
+                db.collection("posts").doc(postId).delete().then(function() {
+                    M.toast({html: 'Post Eliminat', classes: 'rounded green'});
+                    window.location.reload();
+                }).catch(function(error) {
+                    M.toast({html: 'Error al Eliminat Post', classes: 'rounded red'});
+                });
+            }
         }
     }
 </script>

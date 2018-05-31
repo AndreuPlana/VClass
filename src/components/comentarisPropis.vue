@@ -2,7 +2,7 @@
     <div>
         <h3>Comentaris</h3>
         <ul  class="collection with-header" v-for="comentaris in comentaris" v-bind:key="comentaris.id">
-            <li class="collection-header"><img class="icon-size-comment left" v-bind:src="comentaris.image" alt="foto usuari"><h5><router-link :to="`/perfil/${comentaris.iduser}`">{{comentaris.username}}</router-link></h5></li>
+            <li class="collection-header"><img class="icon-size-comment left" v-bind:src="comentaris.image" alt="foto usuari"><h5><router-link :to="`/perfil/${comentaris.iduser}`">{{comentaris.username}}</router-link></h5><a class="btn red" v-on:click="eliminar(comentaris.id)"><i class="material-icons">delete</i></a></li>
             <li class="collection-item"><div><p>{{comentaris.comentari}}</p></div></li>
         </ul>
     </div>
@@ -38,6 +38,16 @@
                     console.log(cdata);
                 })
             })
+        },
+        methods:{
+            eliminar: function(postId){
+                db.collection("comentaris").doc(postId).delete().then(function() {
+                    M.toast({html: 'Comentari Eliminat', classes: 'rounded green'});
+                    window.location.reload();
+                }).catch(function(error) {
+                    M.toast({html: 'Error al Eliminat Post', classes: 'rounded red'});
+                });
+            }
         }
     }
 </script>
