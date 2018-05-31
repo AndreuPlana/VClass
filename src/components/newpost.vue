@@ -127,7 +127,7 @@ export default {
         }
         ,
          createpost(event) {
-        if (this.titol || this.contingut || this.categoria) {
+        if (this.titol && this.contingut && this.categoria) {
              
             if(this.file){
                 var storageRef = firebase.storage().ref(new Date().getTime()+this.file.name);
