@@ -3,16 +3,11 @@
         <div>
             <h3>Post</h3>
             <ul v-for="posts in posts" v-bind:key="posts.id" class="collection with-header">
-<<<<<<< HEAD
-                <li class="collection-header"> <h4>{{posts.titol}}</h4></li>
-                <li class="collection-item"><div>{{posts.content}}</div></li>
-=======
                 <li class="collection-header"><img class="icon-size-post left" v-bind:src="posts.image" alt="foto usuari"><h4>{{posts.titol}}<small class="right sizeSmall">Creat per {{posts.username}}</small></h4></li>
                 <li class="collection-item"><div>
                     <p>{{posts.content}}</p>
                     <a v-bind:href="posts.link">{{posts.arxiu}}</a>
                 </div></li>
->>>>>>> master
 
             </ul>
             <div id="preloaderPosts" class="center">
