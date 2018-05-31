@@ -34,11 +34,11 @@
                     </div>
                     <div class="input-field">
                         <label for="telefon">Telefon</label>
-                        <input type="number" name="telefon" v-model="telefon" id="telefon" class="form-control">
+                        <input type="text" name="telefon" v-model="telefon" id="telefon" class="form-control">
                     </div>
                     <div class="input-field">
                         <label for="codiPostal">Codi Postal</label>
-                        <input type="number" name="codiPostal" v-model="cpostal" id="codiPostal" class="form-control">
+                        <input type="text" name="codiPostal" v-model="cpostal" id="codiPostal" class="form-control">
                     </div>
                     <p>
                         <label>

@@ -7,7 +7,7 @@
           <div>
             <ul class="right">
               <li v-if="isLoggedIn">
-                <router-link to="/">DashBoard</router-link>
+                <router-link to="/">Inici</router-link>
               </li>
               <li v-if="!isLoggedIn">
                 <router-link to="/login">Login</router-link>
@@ -19,7 +19,7 @@
                 <router-link to="/profile">Perfil</router-link>
               </li>
               <li v-if="isLoggedIn">
-                <router-link to="/newpost">New Post</router-link>
+                <router-link to="/newpost">Crear Post</router-link>
               </li>
               <li v-if="isLoggedIn">
                 <a class="btn red" id="hide-on-extrasmall" v-on:click="logout"><i class="material-icons left">exit_to_app</i>Logout</a>

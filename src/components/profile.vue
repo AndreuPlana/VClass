@@ -93,12 +93,12 @@
                     <div class="input-field">
                         <label for="telefon" v-if="users.telefon">{{users.telefon}}</label>
                         <label for="telefon" v-else>Telefon</label>
-                        <input type="number" name="telefon" v-model="telefon" id="telefon" class="form-control">
+                        <input type="text" name="telefon" v-model="telefon" id="telefon" class="form-control">
                     </div>
                     <div class="input-field">
                         <label for="codiPostal" v-if="users.cpostal">{{users.cpostal}}</label>
                         <label for="codiPostal" v-else>Codi Postal</label>
-                        <input type="number" name="codiPostal" v-model="cpostal" id="codiPostal" class="form-control">
+                        <input type="text" name="codiPostal" v-model="cpostal" id="codiPostal" class="form-control">
                     </div>
                     <br>
                     <div class="input-field">
@@ -205,11 +205,11 @@
                     firebase.auth().currentUser.updateProfile({
                         photoURL: this.image
                     }).then(function() {
-                        // TOT OK
+                        M.toast({html: 'Usuari Modificat', classes: 'rounded green'});
                     }).catch(function(error) {
                         // An error happened.
                     });
-                    M.toast({html: 'Usuari Modificat', classes: 'rounded green'});
+
                     e.preventDefault();
                 }
             }
