@@ -48,8 +48,8 @@
                         </div>
                     </div>
                 </div>
-                <router-link v-for="users in users" :to="`/posts-users/${users.link}`"><button class="btn btn-custom">VEURE POSTS</button><br><br></router-link>
-                <router-link v-for="users in users" :to="`/comentaris-users/${users.link}`"><button class="btn btn-custom">VEURE COMENTARIS</button></router-link>
+                <router-link v-for="users in users" v-bind:key="users.id" :to="`/posts-users/${users.link}`"><button class="btn btn-custom">VEURE POSTS</button><br><br></router-link>
+                <router-link v-for="users in users" v-bind:key="users.id" :to="`/comentaris-users/${users.link}`"><button class="btn btn-custom">VEURE COMENTARIS</button></router-link>
             </div>
             <div class="mayus col m3 s6" v-for="users in users" v-bind:key="users.id">
                 <h6 v-if="users.user">USER: {{users.user}}</h6>
