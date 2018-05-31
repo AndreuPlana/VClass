@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <router-link to="/posts-propis"><button class="btn btn-custom">VEURE POSTS</button></router-link><br><br>
-                <button class="btn btn-custom">VEURE COMENTARIS</button>
+                <router-link to="/comentaris-propis"><button class="btn btn-custom">VEURE COMENTARIS</button></router-link>
                 <div class="input-field">
                     <form>
                         <label for="image">Imatge de Perfil</label>

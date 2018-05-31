@@ -101,7 +101,7 @@
     .icon-size-post{
         width: 50px;
         height: 50px;
-        margin: 1rem 1rem 0 0;
+        margin: 0 1rem 0 0;
     }
     .lletra{
         color: rgba(0,0,0,0.87);
