@@ -48,7 +48,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-custom">VEURE POSTS</button><br><br>
+                <router-link to="/posts-propis"><button class="btn btn-custom">VEURE POSTS</button></router-link><br><br>
                 <button class="btn btn-custom">VEURE COMENTARIS</button>
                 <div class="input-field">
                     <form>
