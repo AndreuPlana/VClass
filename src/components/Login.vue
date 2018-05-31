@@ -67,6 +67,7 @@
 
 <script>
     import firebase from 'firebase';
+    import db from './firebaseInit';
     export default {
         name:'Login',
         data(){
@@ -94,6 +95,10 @@
                     var token = result.credential.accessToken;
                     // The signed-in user info.
                     var user = result.user;
+                    db.collection('users').doc(firebase.auth().currentUser.uid).set({
+                        username: firebase.auth().currentUser.displayName,
+                        image: firebase.auth().currentUser.photoURL
+                    })
                     this.$router.push('/')
                     window.location.reload();
                     // ...
