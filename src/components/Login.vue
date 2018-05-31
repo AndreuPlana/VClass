@@ -59,6 +59,10 @@
         background: #ff3628 !important;
     }
 
+    .btn-google:focus {
+        background: #ff3628 !important;
+    }
+
     .btn-custom2 {
         width: 40%;
         margin-right: 20px;
@@ -99,9 +103,6 @@
                         username: firebase.auth().currentUser.displayName,
                         image: firebase.auth().currentUser.photoURL
                     })
-                    this.$router.push('/')
-                    window.location.reload();
-                    // ...
                 }).catch(function(error) {
                     // Handle Errors here.
                     var errorCode = error.code;
@@ -112,7 +113,6 @@
                     var credential = error.credential;
                     // ...
                 });
-
             }
         }
     }

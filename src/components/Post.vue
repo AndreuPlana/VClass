@@ -101,7 +101,6 @@
                     'titol' : doc.data().titol,
                     'content' : doc.data().contingut,
                     'tags' : doc.data().tags,
-                    'comments' : doc.data().commentaris,
                     'arxiu': doc.data().arxiu,
                     'username': doc.data().username,
                     'image': doc.data().image
