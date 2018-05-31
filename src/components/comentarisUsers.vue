@@ -12,7 +12,7 @@
     import firebase from 'firebase';
     import db from './firebaseInit'
     export default {
-        name: "comentarisPropis",
+        name: "comentarisUsers",
         data(){
             return{
                 comentaris:[]
@@ -24,8 +24,8 @@
             }
         },
         created(){
-            var currentUser = firebase.auth().currentUser.uid;
-            db.collection('comentaris').where('iduser','==', currentUser).get().then(querySnapshot=>{
+            var yeah = this.$route.params.userid;
+            db.collection('comentaris').where('iduser','==', yeah).get().then(querySnapshot=>{
                 querySnapshot.forEach(doc => {
                     const cdata = {
                         'id' : doc.id,
@@ -43,9 +43,5 @@
 </script>
 
 <style scoped>
-    .icon-size-comment{
-        width: 50px;
-        height: 50px;
-        margin-right: 1rem;
-    }
+
 </style>
