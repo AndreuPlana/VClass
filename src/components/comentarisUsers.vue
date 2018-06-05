@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>Comentaris</h3>
+        <h3>Llista de comentaris</h3>
         <ul  class="collection with-header" v-for="comentaris in comentaris" v-bind:key="comentaris.id">
             <li class="collection-header"><img class="icon-size-comment left" v-bind:src="comentaris.image" alt="foto usuari"><h5><router-link :to="`/perfil/${comentaris.iduser}`">{{comentaris.username}}</router-link></h5></li>
             <li class="collection-item"><div><p>{{comentaris.comentari}}</p></div></li>

@@ -158,7 +158,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     img{
         width: 100%;
         margin-bottom: 17px;
@@ -180,6 +180,9 @@
         width: 100%;
     }
 
-    .size{
+    .icon-size-post{
+        width: 50px;
+        height: 50px;
+        margin: 1rem 1rem 0 0;
     }
 </style>

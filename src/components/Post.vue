@@ -3,11 +3,11 @@
         <div>
             <h3>Post</h3>
             <ul v-for="posts in posts" v-bind:key="posts.id" class="collection with-header">
-                <li class="collection-header"><img class="icon-size-post left" v-bind:src="posts.image" alt="foto usuari"><h4>{{posts.titol}}<small class="right sizeSmall">Creat per {{posts.username}}</small></h4></li>
+                <li class="collection-header"><img class="icon-size-post left" v-bind:src="posts.image" alt="foto usuari"><h4>{{posts.titol}}<small class="right sizeSmall">Creat per <router-link :to="`/perfil/${posts.usuari}`">{{posts.username}}</router-link></small></h4></li>
                 <li class="collection-item"><div>
                     <p>{{posts.content}}</p>
-                    <a v-bind:href="posts.link">{{posts.arxiu}}</a>
-                </div></li>
+                    <a v-if="posts.link" class="waves-effect waves-light btn" v-bind:href="posts.link"><i class="material-icons">cloud_download</i> {{posts.arxiu}}</a>
+        </div></li>
 
             </ul>
             <div id="preloaderPosts" class="center">
@@ -103,7 +103,8 @@
                     'tags' : doc.data().tags,
                     'arxiu': doc.data().arxiu,
                     'username': doc.data().username,
-                    'image': doc.data().image
+                    'image': doc.data().image,
+                    'usuari': doc.data().usuari
                 }
                 this.posts.push(pdata)
                 document.getElementById('preloaderPosts').style.display = "none";

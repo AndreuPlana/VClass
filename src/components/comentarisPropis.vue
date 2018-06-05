@@ -1,10 +1,11 @@
 <template>
     <div>
-        <h3>Comentaris</h3>
-        <ul  class="collection with-header" v-for="comentaris in comentaris" v-bind:key="comentaris.id">
+        <h3>Els teus comentaris</h3>
+        <ul v-if="comentaris" class="collection with-header" v-for="comentaris in comentaris" v-bind:key="comentaris.id">
             <li class="collection-header"><img class="icon-size-comment left" v-bind:src="comentaris.image" alt="foto usuari"><h5><router-link :to="`/perfil/${comentaris.iduser}`">{{comentaris.username}}</router-link></h5><a class="btn red" v-on:click="eliminar(comentaris.id)"><i class="material-icons">delete</i></a></li>
             <li class="collection-item"><div><p>{{comentaris.comentari}}</p></div></li>
         </ul>
+
     </div>
 </template>
 

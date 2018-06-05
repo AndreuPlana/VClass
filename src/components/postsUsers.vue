@@ -2,10 +2,10 @@
     <div>
         <ul class="collection with-header">
             <li class="collection-header">
-                <h4>PostsList</h4>
+                <h4>Llista de Posts</h4>
             </li>
             <li v-for="posts in posts" v-bind:key="posts.id" class="collection-item">
-                <router-link :to="`/post/${posts.link}`" class=" lletra"><img class="icon-size-post left" v-bind:src="posts.image" alt="foto usuari"><h4>{{posts.titol}}<small class="right sizeSmall">Creat per {{posts.username}}</small></h4></router-link>
+                <router-link :to="`/post/${posts.link}`" class=" lletra"><img class="icon-size-post left" v-bind:src="posts.image" alt="foto usuari"><h4>{{posts.titol}}<small class="right sizeSmall">Creat per <router-link :to="`/perfil/${posts.usuari}`">{{posts.username}}</router-link></small></h4></router-link>
                 <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}"></router-link>
             </li>
             <div id="preloaderPost" class="center margin">
@@ -93,6 +93,17 @@
     }
 </script>
 
-<style scoped>
+<style>
+    .sizeSmall{
+        font-size: 40%;
+    }
 
+    .icon-size-post{
+        width: 50px;
+        height: 50px;
+        margin: 1rem 1rem 0 0;
+    }
+    .lletra{
+        color: rgba(0,0,0,0.87);
+    }
 </style>
