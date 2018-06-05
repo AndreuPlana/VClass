@@ -5,7 +5,49 @@
             <li class="collection-header"><img class="icon-size-comment left" v-bind:src="comentaris.image" alt="foto usuari"><h5><router-link :to="`/perfil/${comentaris.iduser}`">{{comentaris.username}}</router-link></h5><a class="btn red" v-on:click="eliminar(comentaris.id)"><i class="material-icons">delete</i></a></li>
             <li class="collection-item"><div><p>{{comentaris.comentari}}</p></div></li>
         </ul>
+        <div id="preloader" class="center margin">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
 
+                <div class="spinner-layer spinner-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+
+                <div class="spinner-layer spinner-yellow">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+
+                <div class="spinner-layer spinner-green">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -36,6 +78,7 @@
                         'image': doc.data().image
                     }
                     this.comentaris.push(cdata);
+                    document.getElementById('preloader').style.display = "none";
                     console.log(cdata);
                 })
             })
@@ -46,14 +89,14 @@
                     M.toast({html: 'Comentari Eliminat', classes: 'rounded green'});
                     window.location.reload();
                 }).catch(function(error) {
-                    M.toast({html: 'Error al Eliminat Post', classes: 'rounded red'});
+                    M.toast({html: 'Error al Eliminar el Comentari', classes: 'rounded red'});
                 });
             }
         }
     }
 </script>
 
-<style scoped>
+<style>
     .icon-size-comment{
         width: 50px;
         height: 50px;

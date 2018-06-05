@@ -6,7 +6,7 @@
             </li>
             <li v-for="posts in posts" v-bind:key="posts.id" class="collection-item">
                 <router-link :to="`/post/${posts.link}`" class=" lletra"><img class="icon-size-post left" v-bind:src="posts.image" alt="foto usuari"><h5>{{posts.titol}}<small class="right sizeSmall">Creat per <router-link :to="`/perfil/${posts.usuari}`">{{posts.username}}</router-link></small></h5></router-link>
-                <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}"></router-link><a class="btn red" v-on:click="eliminar(posts.link)"><i class="material-icons">delete</i></a>
+                <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}"></router-link><a class="btn red" v-on:click="eliminar(posts.link), eliminarComment(posts.link)"><i class="material-icons">delete</i></a>
             </li>
             <div id="preloaderPost" class="center margin">
                 <div class="preloader-wrapper big active">
@@ -95,10 +95,27 @@
             eliminar: function(postId){
                 db.collection("posts").doc(postId).delete().then(function() {
                     M.toast({html: 'Post Eliminat', classes: 'rounded green'});
-                    window.location.reload();
                 }).catch(function(error) {
-                    M.toast({html: 'Error al Eliminat Post', classes: 'rounded red'});
+                    M.toast({html: 'Error al Eliminar Post', classes: 'rounded red'});
                 });
+            },
+            eliminarComment: function (postId) {
+                db.collection('comentaris').where('idpost','==', postId).get().then(querySnapshot=>{
+                    querySnapshot.forEach(doc => {
+                        const cdata = {
+                            'id' : doc.id,
+                            'comentari' : doc.data().comentari,
+                            'username': doc.data().username,
+                            'iduser': doc.data().iduser,
+                            'image': doc.data().image
+                        }
+                        db.collection("comentaris").doc(cdata.id).delete().then(function() {
+                            window.location.reload();
+                        }).catch(function(error) {
+                            console.log(error);
+                        });
+                    })
+                })
             }
         }
     }
@@ -110,7 +127,7 @@
     }
 
     .icon-size-post{
-        width: 50px;
+        width: 51.5px;
         height: 50px;
         margin: 0 1rem 0 0;
     }

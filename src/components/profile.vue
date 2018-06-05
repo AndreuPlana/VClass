@@ -55,7 +55,7 @@
                         <label for="image">Imatge de Perfil</label>
                         <input type="text" name="image" v-model="image" id="image" class="form-control">
                         <div class="input-field">
-                            <input type="submit" v-on:click="modificarImatge" value="MODIFICAR" class="btn">
+                            <input type="submit" v-on:click="modificarImatge" value="MODIFICAR" class="btn col s12">
                         </div>
                     </form>
                 </div>
@@ -102,7 +102,7 @@
                     </div>
                     <br>
                     <div class="input-field">
-                        <input type="submit" v-on:click="modificar" value="MODIFICAR" class="btn">
+                        <input type="submit" v-on:click="modificar" value="MODIFICAR" class="btn col s12">
                     </div>
                 </form>
             </div>
@@ -239,6 +239,4 @@
         width: 100%;
     }
 
-    .size{
-    }
 </style>

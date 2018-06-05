@@ -59,7 +59,7 @@
                 <h6 v-if="users.telefon">TELEFON: {{users.telefon}}</h6>
                 <h6 v-if="users.cpostal">CP: {{users.cpostal}}</h6>
             </div>
-            
+
         </div>
     </div>
 </template>
@@ -178,11 +178,5 @@
 
     .btn-custom {
         width: 100%;
-    }
-
-    .icon-size-post{
-        width: 50px;
-        height: 50px;
-        margin: 1rem 1rem 0 0;
     }
 </style>
