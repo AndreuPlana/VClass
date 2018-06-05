@@ -58,7 +58,7 @@
                 <h4>Posts</h4>
             </li>
             <li v-for="posts in posts" v-bind:key="posts.id" class="collection-item">
-                <router-link :to="`/post/${posts.link}`" class=" lletra"><img class="icon-size-post left" v-bind:src="posts.image" alt="foto usuari"><h5>{{posts.titol}}<small class="right sizeSmall">Creat per {{posts.username}}</small></h5></router-link>
+                <router-link :to="`/post/${posts.link}`" class=" lletra"><img class="icon-size-post left" v-bind:src="posts.image" alt="foto usuari"><h5>{{posts.titol}}<small class="right sizeSmall">Creat per <router-link :to="`/perfil/${posts.usuari}`">{{posts.username}}</router-link></small></h5></router-link>
                 <router-link class="secondary-content" v-bind:to="{ name: 'Post', params: { postid: posts.link }}"></router-link>
             </li>
             <div id="preloaderPost" class="center margin">
